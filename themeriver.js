@@ -7,8 +7,7 @@ var years = [];
 buildChart(dataUri);
 
 function buildChart(uri) {
-
-
+	
 }
 
 function randomColorMix(color1, color2, color2, greyControl) {
