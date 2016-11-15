@@ -6,7 +6,7 @@ var years = [];
 buildChart(dataUri);
 
 function buildChart(uri) {
-	var margin = {top: 20, right: 20, bottom: 40, left: 50}
+	var margin = {top: 20, right: 40, bottom: 30, left: 30};
 	var width = document.body.clientWidth - margin.left - margin.right;
 	var height = 400 - margin.top - margin.bottom;
 
@@ -69,7 +69,7 @@ function buildChart(uri) {
 
 		svg.append("g")
 		.attr("class", "y axis")
-		.attr("transform", "translate(" + width - 20 + ", 0)")
+		.attr("transform", "translate(" + width + ", 0)")
 		.call(yAxisRight);
 
 		svg.append("g")
