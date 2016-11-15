@@ -80,9 +80,9 @@ function buildChart(uri) {
 		d3.selectAll(".layer").attr("opacity", 0.5);
 
 		d3.select(this)
-		.attr("opacity", "1")
-		.attr("stroke", strokeColor)
-		.attr("stroke-width", "3px")
+		.style("opacity", "1")
+		.style("stroke", strokeColor)
+		.style("stroke-width", "3px")
 		.style("fill", "#F3F315");
 
 		addToolTip(d, i);
@@ -104,9 +104,9 @@ function buildChart(uri) {
 
 		d3.select("#tooltip")
 		.style("display", "inline")
-		.attr("top", d3.event.pageY - 10)
-		.attr("left", d3.event.pageX + 10)
-		.attr("right", width - margin.right)
+		.style("top", d3.event.pageY - 10)
+		.style("left", d3.event.pageX + 10)
+		.style("right", width - margin.right)
 		.html("(" + d.key + ", " + d.x + ", " + d.y + ")");
 	}
 
@@ -118,10 +118,10 @@ function buildChart(uri) {
 function createToolTip() {
 	var tooltip = d3.select("div#graph").append("div")
 	.attr("id", "tooltip")
-	.attr("position", "absolute")
-	.attr("top","0px")
-	.attr("left", "0px")
-	.attr("z-index", "100")
+	.style("position", "absolute")
+	.style("top","0px")
+	.style("left", "0px")
+	.style("z-index", "100")
 	.style("display","none");
 }
 
