@@ -1,5 +1,6 @@
 var dataUri = "data.csv";
-var colors = [new RGBColour(108,209,230), new RGBColour(224,227,204),new RGBColour(250,104,0)];
+//var colors = [new RGBColour(108,209,230), new RGBColour(224,227,204),new RGBColour(250,104,0)];
+var colors = d3.scale.category20();
 var graphColors = [];
 var years = [];
 
@@ -10,7 +11,7 @@ function buildChart(uri) {
 	var width = document.body.clientWidth - margin.left - margin.right;
 	var height = 400 - margin.top - margin.bottom;
 
-	var strokeColor = randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
+	var strokeColor = colors("stroke");//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 
 	var x = d3.scale.linear().range([0, width]);
 	var y = d3.scale.linear().range([height - 10, 0]);
@@ -26,7 +27,6 @@ function buildChart(uri) {
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	d3.csv(uri, function(data) {
-		console.log(data);
 		var headers = d3.keys(data[0]);
 
 		// Remove League
@@ -34,7 +34,6 @@ function buildChart(uri) {
 
 		var layers = d3.layout.stack().offset("silhouette")(data.map(function(d) {
 			return headers.map(function(c) {
-				console.log({x: c, y: +d[c]});
 				d.key = d.League;
 				return {x: c, y: +d[c]};
 			});
@@ -43,9 +42,9 @@ function buildChart(uri) {
 		x.domain(d3.extent(layers[0], function(d) { return d.x; }));
 		y.domain([0, d3.max(layers[layers.length - 1], function(d) { return d.y0 + d.y; })]);
 
-		while (graphColors.length < headers.length) {
-			graphColors.push(randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1));
-		}
+		// while (graphColors.length < headers.length) {
+		// 	graphColors.push(randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1));
+		// }
 
 		var area = d3.svg.area()
 		.interpolate("cardinal")
@@ -57,10 +56,8 @@ function buildChart(uri) {
 		.data(layers)
 		.enter().append("path")
 		.attr("class", "layer")
-		.attr("d", function(d) { 
-			console.log(d);
-			return area(d); })
-		.style("fill", function(d, i) { return graphColors[i].getCSSIntegerRGBA(); });
+		.attr("d", function(d) { return area(d); })
+		.style("fill", function(d, i) { return colors(i); });
 
 		svg.append("g")
 		.attr("class", "x axis")
