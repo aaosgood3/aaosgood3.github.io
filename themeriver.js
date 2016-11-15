@@ -58,7 +58,7 @@ function buildChart(uri) {
 		.enter().append("path")
 		.attr("class", "layer")
 		// .attr("d", function(d) { return area(d.values); })
-		.style("fill", function(d, i) { return graphColors(i); });
+		.style("fill", function(d, i) { return graphColors[i].getCSSIntegerRGBA(); });
 
 		svg.append("g")
 		.attr("class", "x axis")
