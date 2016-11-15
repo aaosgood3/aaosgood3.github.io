@@ -72,11 +72,7 @@ function buildChart(uri) {
 		.call(yAxisLeft);
 
 		svg.selectAll(".layer")
-		.on("mouseover", function(d, i) {
-			toolTipMouseOver(d, i);
-			d3.select(this)
-			.on("mousemove", addToolTip);
-		})
+		.on("mouseover", toolTipMouseOver)
 		.on("mouseout", toolTipMouseOut);
 	});
 
@@ -88,6 +84,8 @@ function buildChart(uri) {
 		.style("stroke", strokeColor)
 		.style("stroke-width", "3px")
 		.style("fill", "#F3F315");
+
+		addToolTip(d, i);
 	}
 
 	function toolTipMouseOut(d, i) {
