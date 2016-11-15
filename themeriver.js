@@ -40,13 +40,13 @@ function buildChart(uri) {
 	.y0(function(d) { return y(d.y0); })
 	.y1(function(d) { return y(d.y0 + d.y); });
 
-	var svg = d3.select(".chart").append("svg")
+	var svg = d3.select(".graph").append("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom)
 	.append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var graph = d3.csv(csvpath, function(data) {
+	var graph = d3.csv(uri, function(data) {
 		console.log(data);
 		data.forEach(function(d) {
 			console.log(d);
