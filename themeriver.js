@@ -17,7 +17,7 @@ function buildChart(uri) {
 	var x = d3.scale.ordinal().range([0, width]);
 	var y = d3.scale.linear().range([height, 0]);
 	
-	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.years);
+	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.years, 1);
 	var yAxisLeft = d3.svg.axis().scale(y).orient("left");
 	var yAxisRight = d3.svg.axis().scale(y).orient("right");
 
