@@ -55,7 +55,7 @@ function buildChart(uri) {
 
 		x.domain(d3.extent(data, function(d) { return d.date; }));
 		y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
-	}
+	});
 }
 
 function randomColorMix(color1, color2, color3, greyControl) {
