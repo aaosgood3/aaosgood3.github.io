@@ -83,7 +83,7 @@ function buildChart(uri) {
 		.style("opacity", "1")
 		.style("stroke", strokeColor)
 		.style("stroke-width", "3px")
-		.style("fill", "#F3F315");
+		.style("fill", "#F3F315")
 		.on("mousemove", addToolTip(d, i));
 	}
 
