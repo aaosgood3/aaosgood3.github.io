@@ -1,8 +1,7 @@
 var dataUri = "data.csv";
 //var colors = [new RGBColour(108,209,230), new RGBColour(224,227,204),new RGBColour(250,104,0)];
 var colors = d3.scale.category20();
-var data = [];
-var graphColors = [];
+var dataGlobal = [];
 var years = [];
 
 var margin = {top: 20, right: 40, bottom: 30, left: 30};
@@ -43,14 +42,10 @@ function buildChart(uri) {
 		}));
 
 		// Make the data global
-		data = layers;
+		dataGlobal = layers;
 
 		x.domain(d3.extent(layers[0], function(d) { return d.x; }));
 		y.domain([0, d3.max(layers[layers.length - 1], function(d) { return d.y0 + d.y; })]);
-
-		// while (graphColors.length < headers.length) {
-		// 	graphColors.push(randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1));
-		// }
 
 		var area = d3.svg.area()
 		.interpolate("cardinal")
@@ -89,7 +84,7 @@ function buildChart(uri) {
 		d3.select(this)
 		.attr("opacity", "1")
 		.attr("stroke", strokeColor)
-		.attr("stroke-width", "1px")
+		.attr("stroke-width", "3px")
 		.style("fill", "#F3F315");
 
 		addToolTip(d, i);
@@ -106,7 +101,8 @@ function buildChart(uri) {
 	}
 
 	function addToolTip(d, i) {
-		console.log(d);
+		console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
+		console.log(dataGlobal[i]);
 
 		d3.select("#tooltip")
 		.attr("top", d3.event.pageY - 10)
