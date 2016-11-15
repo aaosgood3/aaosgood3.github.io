@@ -37,12 +37,10 @@ function buildChart(uri) {
 		var layers = d3.layout.stack().offset("silhouette")(data.map(function(d) {
 			return headers.map(function(c) {
 				d.key = d.League;
+				dataGlobal.push(d);
 				return {x: c, y: +d[c]};
 			});
 		}));
-
-		// Make the data global
-		dataGlobal = layers;
 
 		x.domain(d3.extent(layers[0], function(d) { return d.x; }));
 		y.domain([0, d3.max(layers[layers.length - 1], function(d) { return d.y0 + d.y; })]);
@@ -75,12 +73,13 @@ function buildChart(uri) {
 		.call(yAxisLeft);
 
 		svg.selectAll(".layer")
-		.attr("opacity", "0.2")
 		.on("mouseover", toolTipMouseOver)
 		.on("mouseout", toolTipMouseOut);
 	});
 
 	function toolTipMouseOver(d, i) {
+		d3.selectAll(".layer").attr("opacity", 0.2);
+
 		d3.select(this)
 		.attr("opacity", "1")
 		.attr("stroke", strokeColor)
