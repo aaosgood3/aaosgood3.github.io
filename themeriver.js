@@ -10,7 +10,7 @@ var width = document.body.clientWidth - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
 
 buildChart(dataUri);
-addToolTip();
+createToolTip();
 
 function buildChart(uri) {
 
