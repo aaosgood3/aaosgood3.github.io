@@ -11,7 +11,7 @@ function buildChart(uri) {
 	var height = 400 - margin.top - margin.bottom;
 
 	var strokeColor = randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
-	
+
 	var format = d3.time.format("%Y");
 
 	var x = d3.scale.ordinal().range([0, width]);
@@ -49,18 +49,18 @@ function buildChart(uri) {
 			graphColors.push(randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1));
 		}
 
+		var area = d3.svg.area()
+		.interpolate("cardinal")
+		.x(function(d) { return x(d.x); })
+		.y0(function(d) { return y(d.y0); })
+		.y1(function(d) { return y(d.y0 + d.y); });
+
 		var layer = svg.selectAll(".layer")
 		.data(layers)
 		.enter().append("path")
 		.attr("class", "layer")
 		.attr("d", function(d) { return area(d.values); })
 		.style("fill", function(d, i) { return graphColors(i); });
-
-		var area = d3.svg.area()
-		.interpolate("cardinal")
-		.x(function(d) { return x(d.x); })
-		.y0(function(d) { return y(d.y0); })
-		.y1(function(d) { return y(d.y0 + d.y); });
 
 		svg.append("g")
 		.attr("class", "x axis")
