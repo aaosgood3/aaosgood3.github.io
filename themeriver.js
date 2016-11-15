@@ -36,7 +36,6 @@ function buildChart(uri) {
 
 		var layers = d3.layout.stack().offset("silhouette")(data.map(function(d) {
 			return headers.map(function(c) {
-				d.key = d.League;
 				dataGlobal.push(d);
 				return {x: c, y: +d[c]};
 			});
@@ -78,7 +77,7 @@ function buildChart(uri) {
 	});
 
 	function toolTipMouseOver(d, i) {
-		d3.selectAll(".layer").attr("opacity", 0.2);
+		d3.selectAll(".layer").attr("opacity", 0.5);
 
 		d3.select(this)
 		.attr("opacity", "1")
@@ -104,6 +103,7 @@ function buildChart(uri) {
 		console.log(dataGlobal[i]);
 
 		d3.select("#tooltip")
+		.style("display", "inline")
 		.attr("top", d3.event.pageY - 10)
 		.attr("left", d3.event.pageX + 10)
 		.attr("right", width - margin.right)
@@ -111,7 +111,7 @@ function buildChart(uri) {
 	}
 
 	function removeToolTip() {
-		d3.select("#tooltip").attr("display", "none");
+		d3.select("#tooltip").style("display", "none");
 	}
 }
 
@@ -121,7 +121,8 @@ function createToolTip() {
 	.attr("position", "absolute")
 	.attr("top","0px")
 	.attr("left", "0px")
-	.attr("display","none");
+	.attr("z-index", "100")
+	.style("display","none");
 }
 
 // function randomColorMix(color1, color2, color3, greyControl) {
