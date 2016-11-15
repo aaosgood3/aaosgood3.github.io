@@ -14,7 +14,7 @@ addToolTip();
 
 function buildChart(uri) {
 
-	var strokeColor = "#09101c";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
+	var strokeColor = "#fff";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 
 	var x = d3.scale.linear().range([0, width]);
 	var y = d3.scale.linear().range([height - 10, 0]);
@@ -86,12 +86,11 @@ function buildChart(uri) {
 	});
 
 	function toolTipMouseOver(d, i) {
-		d3.select(this).attr({
-			opacity: 1,
-			fill: "#F3F315",
-			stroke: strokeColor,
-			"stroke-width": "1px"
-		});
+		d3.select(this)
+		.attr("opacity", "1")
+		.attr("stroke", strokeColor)
+		.attr("stroke-width", "1px")
+		.style("fill", "#F3F315");
 
 		addToolTip(d, i);
 	}
@@ -99,21 +98,19 @@ function buildChart(uri) {
 	function toolTipMouseOut(d, i) {
 		d3.selectAll(".layer").attr("opacity", 1);
 
-		d3.select(this).attr({
-			fill: colors(i),
-			"stroke-width": "0px"
-		});
+		d3.select(this)
+		.attr("stroke-width", "0px")
+		.style("fill", colors(i));
 
 		removeToolTip();
 	}
 
 	function addToolTip(d, i) {
 		console.log(d);
-		var mouseXY = d3.mouse(this);
 
 		d3.select("#tooltip")
-		.attr("top", mouseXY[1] - 10)
-		.attr("left", mouseXY[0] + 10)
+		.attr("top", d3.event.pageY - 10)
+		.attr("left", d3.event.pageX + 10)
 		.attr("right", width - margin.right)
 		.html("(" + d.key + ", " + d.x + ", " + d.y + ")");
 	}
