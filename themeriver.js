@@ -19,16 +19,43 @@ function buildChart(uri) {
 	var z = d3.scale.ordinal().range(colorrange);
 
 	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.years);
-	var yAxis = d3.svg.axis().scale(y);
+	var yAxisLeft = d3.svg.axis().scale(y);
+	var yAxisRight = d3.svg.axis().scale(y);
 
 	var stack = d3.layout.stack()
-    .offset("silhouette")
-    .values(function(d) { return d.values; })
-    .x(function(d) { return d.date; })
-    .y(function(d) { return d.value; });
+	.offset("silhouette")
+	.values(function(d) { 
+		console.log(d);
+		return d.values; })
+	.x(function(d) { return d.date; })
+	.y(function(d) { return d.value; });
 
-    var nest = d3.nest()
-    .key(function(d) { return d.key; });
+	var nest = d3.nest()
+	.key(function(d) { return d.key; });
+
+	var area = d3.svg.area()
+	.interpolate("cardinal")
+	.x(function(d) { return x(d.date); })
+	.y0(function(d) { return y(d.y0); })
+	.y1(function(d) { return y(d.y0 + d.y); });
+
+	var svg = d3.select(".chart").append("svg")
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom)
+	.append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	var graph = d3.csv(csvpath, function(data) {
+		console.log(data);
+		data.forEach(function(d) {
+			console.log(d);
+		});
+
+		var layers = stack(nest.entries(data));
+
+		x.domain(d3.extent(data, function(d) { return d.date; }));
+		y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+	}
 }
 
 function randomColorMix(color1, color2, color3, greyControl) {
