@@ -84,15 +84,14 @@ function buildChart(uri) {
 		.style("stroke", strokeColor)
 		.style("stroke-width", "3px")
 		.style("fill", "#F3F315");
-
-		addToolTip(d, i);
+		.on("mousemove", addToolTip(d, i));
 	}
 
 	function toolTipMouseOut(d, i) {
 		d3.selectAll(".layer").attr("opacity", 1);
 
 		d3.select(this)
-		.attr("stroke-width", "0px")
+		.style("stroke-width", "0px")
 		.style("fill", colors(i));
 
 		removeToolTip();
@@ -106,7 +105,6 @@ function buildChart(uri) {
 		.style("display", "inline")
 		.style("top", d3.event.pageY - 10)
 		.style("left", d3.event.pageX + 10)
-		.style("right", width - margin.right)
 		.html("(" + d.key + ", " + d.x + ", " + d.y + ")");
 	}
 
