@@ -14,7 +14,7 @@ function buildChart(uri) {
 
 	var format = d3.time.format("%Y");
 
-	var x = d3.time.scale().range([0, width]);
+	var x = d3.scale.ordinal().range([0, width]);
 	var y = d3.scale.linear().range([height, 0]);
 	
 	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.years);
@@ -42,7 +42,6 @@ function buildChart(uri) {
 			});
 		}));
 
-		console.log(d3.extent(layers[0], function(d) { return d.x; }));
 		x.domain(d3.extent(layers[0], function(d) { return d.x; }));
 		y.domain([0, d3.max(layers[layers.length - 1], function(d) { return d.y0 + d.y; })]);
 
