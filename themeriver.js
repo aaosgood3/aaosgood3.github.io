@@ -42,6 +42,7 @@ function buildChart(uri) {
 			});
 		}));
 
+		console.log(d3.extent(layers[0], function(d) { return d.x; }));
 		x.domain(d3.extent(layers[0], function(d) { return d.x; }));
 		y.domain([0, d3.max(layers[layers.length - 1], function(d) { return d.y0 + d.y; })]);
 
