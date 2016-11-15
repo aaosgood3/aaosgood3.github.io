@@ -21,7 +21,7 @@ function buildChart(uri) {
 	var yAxisLeft = d3.svg.axis().scale(y).orient("left");
 	var yAxisRight = d3.svg.axis().scale(y).orient("right");
 
-	var svg = d3.select("#graph").append("svg")
+	var svg = d3.select("body").append("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom)
 	.append("g")
