@@ -42,7 +42,7 @@ function buildChart(uri) {
 			});
 		}));
 
-		x.domain(layers[0].map(function(d) { return d.x; }));
+		x.domain(d3.extent(headers, function(d) { return +d; }));
 		y.domain([0, d3.max(layers[layers.length - 1], function(d) { return d.y0 + d.y; })]);
 
 		while (graphColors.length < headers.length) {
