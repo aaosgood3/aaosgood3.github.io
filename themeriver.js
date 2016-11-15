@@ -15,7 +15,7 @@ function buildChart(uri) {
 	var x = d3.scale.linear().range([0, width]);
 	var y = d3.scale.linear().range([height - 10, 0]);
 	
-	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(10);
+	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(10).tickFormat(d3.format("d"));
 	var yAxisLeft = d3.svg.axis().scale(y).orient("left");
 	var yAxisRight = d3.svg.axis().scale(y).orient("right");
 
