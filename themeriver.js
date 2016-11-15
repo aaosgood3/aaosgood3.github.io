@@ -11,7 +11,6 @@ function buildChart(uri) {
 	var height = 400 - margin.top - margin.bottom;
 
 	var strokeColor = randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
-	console.log(strokeColor.getRGB());
 
 	var format = d3.time.format("%Y");
 
@@ -30,11 +29,10 @@ function buildChart(uri) {
 
 	d3.csv(uri, function(data) {
 		console.log(data);
-		var headers = d3.keys(data[0]);
-		console.log(headers);
+		var headers = data.columns;
 
 		// Remove League
-		headers.splice(headers.indexOf('League'), 1);
+		headers.splice(headers.indexOf(headers[0]), 1);
 		console.log(headers);
 
 		var layers = d3.layout.stack().offset("silhouette")(data.map(function(d) {
@@ -58,7 +56,7 @@ function buildChart(uri) {
 		.attr("d", function(d) { return area(d.values); })
 		.style("fill", function(d, i) { return graphColors(i); });
 
-		var area = svg.area()
+		var area = d3.svg.area()
 		.interpolate("cardinal")
 		.x(function(d) { return x(d.x); })
 		.y0(function(d) { return y(d.y0); })
