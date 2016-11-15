@@ -21,7 +21,7 @@ function buildChart(uri) {
 	var yAxisLeft = d3.svg.axis().scale(y).orient("left");
 	var yAxisRight = d3.svg.axis().scale(y).orient("right");
 
-	var svg = d3.select("body").append("svg")
+	var svg = d3.select("div#graph").append("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom)
 	.append("g")
@@ -33,10 +33,10 @@ function buildChart(uri) {
 
 		// Remove League
 		headers.splice(headers.indexOf('League'), 1);
-		console.log(headers);
 
 		var layers = d3.layout.stack().offset("silhouette")(data.map(function(d) {
 			return headers.map(function(c) {
+				console.log({x: c, y: +d[c]});
 				d.key = d.League;
 				return {x: c, y: +d[c]};
 			});
