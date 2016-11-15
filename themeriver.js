@@ -9,7 +9,7 @@ function buildChart(uri) {
 	var width = document.body.clientWidth - margin.left - margin.right;
 	var height = 400 - margin.top - margin.bottom;
 
-	var strokeColor = randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB());
+	var strokeColor = randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 	console.log(strokeColor.getRGB());
 
 	var format = d3.time.format("%Y");
