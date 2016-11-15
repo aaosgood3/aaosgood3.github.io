@@ -59,7 +59,7 @@ function buildChart(uri) {
 		.attr("class", "layer")
 		.attr("d", function(d) { 
 			console.log(d);
-			return area(d.values); })
+			return area(d); })
 		.style("fill", function(d, i) { return graphColors[i].getCSSIntegerRGBA(); });
 
 		svg.append("g")
