@@ -14,9 +14,24 @@ function buildChart(uri) {
 
 	var format = d3.time.format("%Y");
 
+	var x = d3.time.scale().range([0, width]);
+	var y = d3.scale.linear().range([height-10, 0]);
+	var z = d3.scale.ordinal().range(colorrange);
+
+	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.years);
+	var yAxis = d3.svg.axis().scale(y);
+
+	var stack = d3.layout.stack()
+    .offset("silhouette")
+    .values(function(d) { return d.values; })
+    .x(function(d) { return d.date; })
+    .y(function(d) { return d.value; });
+
+    var nest = d3.nest()
+    .key(function(d) { return d.key; });
 }
 
-function randomColorMix(color1, color2, color2, greyControl) {
+function randomColorMix(color1, color2, color3, greyControl) {
 	var randomIndex = getRandomInt(0, 2);
 
 	var mixRatio1 = (randomIndex == 0) ? Math.random() * greyControl : Math.random();
