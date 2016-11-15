@@ -11,7 +11,7 @@ function buildChart(uri) {
 	var width = document.body.clientWidth - margin.left - margin.right;
 	var height = 400 - margin.top - margin.bottom;
 
-	var strokeColor = colors("stroke");//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
+	var strokeColor = "#09101c";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 
 	var x = d3.scale.linear().range([0, width]);
 	var y = d3.scale.linear().range([height - 10, 0]);
