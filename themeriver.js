@@ -57,7 +57,7 @@ function buildChart(uri) {
 		.data(layers)
 		.enter().append("path")
 		.attr("class", "layer")
-		.attr("d", function(d) { return area(d.values); })
+		// .attr("d", function(d) { return area(d.values); })
 		.style("fill", function(d, i) { return graphColors(i); });
 
 		svg.append("g")
