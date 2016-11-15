@@ -14,7 +14,7 @@ function buildChart(uri) {
 
 	var format = d3.time.format("%Y");
 
-	var x = d3.scale.ordinal().range([0, width]);
+	var x = d3.time.scale().range([0, width]);
 	var y = d3.scale.linear().range([height, 0]);
 	
 	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.years);
@@ -69,7 +69,7 @@ function buildChart(uri) {
 
 		svg.append("g")
 		.attr("class", "y axis")
-		.attr("transform", "translate(" + width + ", 0)")
+		.attr("transform", "translate(" + width - 20 + ", 0)")
 		.call(yAxisRight);
 
 		svg.append("g")
