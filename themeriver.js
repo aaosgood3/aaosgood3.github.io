@@ -76,6 +76,10 @@ function randomColorMix(color1, color2, color3, greyControl) {
 	var g = mixRatio1 * color1.g + mixRatio2 * color2.g + mixRatio3 * color3.g;
 	var b = mixRatio1 * color1.b + mixRatio2 * color2.b + mixRatio3 * color3.b;
 
+	console.log("r: " + r);
+	console.log("g: " + g);
+	console.log("b: " + b);
+
 	return new RGBColour(r * 255, g * 255, b * 255);
 }
 
