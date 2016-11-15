@@ -55,12 +55,12 @@ function buildChart(uri) {
 		.y0(function(d) { return y(d.y0); })
 		.y1(function(d) { return y(d.y0 + d.y); });
 
-		var layer = svg.selectAll(".layer")
-		.data(layers)
-		.enter().append("path")
-		.attr("class", "layer")
-		.attr("d", function(d) { return area(d.values); })
-		.style("fill", function(d, i) { return graphColors(i); });
+		// var layer = svg.selectAll(".layer")
+		// .data(layers)
+		// .enter().append("path")
+		// .attr("class", "layer")
+		// .attr("d", function(d) { return area(d.values); })
+		// .style("fill", function(d, i) { return graphColors(i); });
 
 		svg.append("g")
 		.attr("class", "x axis")
