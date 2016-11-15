@@ -90,7 +90,7 @@ function buildChart(uri) {
 			opacity: 1,
 			fill: "#F3F315",
 			stroke: strokeColor,
-			stroke-width: "1px"
+			"stroke-width": "1px"
 		});
 
 		addToolTip(d, i);
@@ -101,7 +101,7 @@ function buildChart(uri) {
 
 		d3.select(this).attr({
 			fill: colors(i),
-			stroke-width: "0px"
+			"stroke-width": "0px"
 		});
 
 		removeToolTip();
