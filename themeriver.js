@@ -30,7 +30,6 @@ function parseCSVData(string) {
 function buildChart() {
 	createToolTip();
 	var data = dataGlobal;
-	console.log(data);
 
 	var strokeColor = "#fff";
 
@@ -151,6 +150,9 @@ function buildChart() {
 	}
 
 	function drag(d) {
+		console.log(d);
+		d.x += d3.event.dx;
+		d.y += d3.event.dy;
 		d3.select(this).attr("transform", function(d,i){
 			return "translate(" + d.x + "," + d.y + ")"
 		})
