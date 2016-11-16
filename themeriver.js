@@ -73,7 +73,7 @@ function buildChart(uri) {
 		svg.selectAll(".layer")
 		.on("mouseover", toolTipMouseOver)
 		.on("mouseout", toolTipMouseOut)
-		.on("mousemove", addToolTip);
+		// .on("mousemove", addToolTip);
 	});
 
 	function toolTipMouseOver(d, i) {
@@ -111,13 +111,13 @@ function buildChart(uri) {
 
 		var d = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
 
-		var x = x(d[0]);
-		var y = y(d[1]);
+		// var x = x(d[0]);
+		// var y = y(d[1]);
 
 		d3.select("#tooltip")
 		.style("top", d3.event.pageY - 10)
 		.style("left", d3.event.pageX + 10)
-		.html("(" + d.key + ", " + x + ", " + y + ")");
+		.html("(" + d.key + ", " + d0 + ", " + d1 + ")");
 	}
 
 	function removeToolTip() {
