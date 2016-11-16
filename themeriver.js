@@ -103,10 +103,10 @@ function buildChart(uri) {
 		var bisectDate = d3.bisector(function(d) { return d.x; }).left;
 		var i = bisectDate(d, mouseDate);
 
-		var d0 = d[i - 1];
-		var d1 = d[i];
+		var datum = d[i - 1];
+		// var d1 = d[i];
 
-		var datum = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
+		// var datum = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
 
 		d3.select("#tooltip")
 		.style("top", d3.event.pageY - 10)
