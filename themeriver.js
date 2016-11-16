@@ -196,9 +196,8 @@ function fileSelected() {
 	}
 }
 
-function uploadFile(event) {
-	console.log(event.target);
-	var file = event.target.files[0];
+function uploadFile() {
+	var file = document.getElementById('fileToUpload').files[0];
 
 	var reader = new FileReader();
 	reader.onload = function() {
