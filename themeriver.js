@@ -110,6 +110,8 @@ function buildChart(uri) {
 		var d1 = d[i];
 
 		var datum = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
+		console.log(d0);
+		console.log(d1);
 		console.log("i: " + i + ", d0: " + d0 + ", d1: " + d1);
 
 		// var x = x(d[0]);
