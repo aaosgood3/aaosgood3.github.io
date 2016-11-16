@@ -56,9 +56,12 @@ function buildChart() {
 	headers.splice(headers.indexOf('League'), 1);
 	years = headers;
 
+	if (invertedLayers) {
+		data.reverse();
+	}
+
 	var layers = d3.layout.stack()
 	.offset("silhouette")
-	.order(invertedLayers ? "reverse" : "default")
 	(data.map(function(d) {
 		return headers.map(function(c) {
 			return {x: c, y: +d[c], key: d.League};
