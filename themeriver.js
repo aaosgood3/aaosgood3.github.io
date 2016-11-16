@@ -144,12 +144,13 @@ function buildChart() {
 	}
 
 	function addReordering(titles) {
-		var ul = d3.select("#form1").append("ul")
+		var ul = d3.select("#graph").append("ul")
+		.style("float", "right")
 		.attr("id", "sortable");
 
 		titles.forEach(function(t) {
 			ul.append("li")
-			.attr("class", "ui-state-default")
+			.attr("class", "ui-state-default ui-icon")
 			.attr("id", t)
 			.html(t);
 		});
