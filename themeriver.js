@@ -146,11 +146,12 @@ function buildChart() {
 	function addReordering(titles) {
 		var ul = d3.select("#graph").append("ul")
 		.style("float", "right")
+		.attr("class", "sortable")
 		.attr("id", "sortable");
 
 		titles.forEach(function(t) {
 			ul.append("li")
-			.attr("class", "ui-state-default")
+			.attr("class", ".ui-state-default")
 			.attr("id", t)
 			.html(t);
 		});
