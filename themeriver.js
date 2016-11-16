@@ -4,10 +4,6 @@ var dataGlobal;
 var colors = d3.scale.category20();
 var years = [];
 
-var margin = {top: 20, right: 40, bottom: 30, left: 30};
-var width = document.body.clientWidth - margin.left - margin.right;
-var height = 400 - margin.top - margin.bottom;
-
 var invertedLayers = false;
 
 var usingDefaultData = true;
@@ -36,7 +32,11 @@ function buildChart() {
 	var data = dataGlobal;
 	console.log(data);
 
-	var strokeColor = "#fff";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
+	var strokeColor = "#fff";
+
+	var margin = {top: 20, right: 40, bottom: 30, left: 30};
+	var width = document.body.clientWidth - margin.left - margin.right;
+	var height = 400 - margin.top - margin.bottom;
 
 	var x = d3.scale.linear().range([0, width]);
 	var y = d3.scale.linear().range([height - 10, 0]);
@@ -226,12 +226,10 @@ function uploadFile() {
 }
 
 $(window).resize(function(){
-	console.log("made it here1");
 	document.getElementById("graph").innerHTML = "";
 	if (usingDefaultData) {
 		getCSVData(dataUri);
 	} else {
 		parseCSVData(lastUploadedCSV);
 	}
-	console.log("made it here2");
 });
