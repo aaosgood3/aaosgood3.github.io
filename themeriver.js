@@ -15,10 +15,10 @@ function buildChart(uri) {
 
 	var strokeColor = "#fff";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 
-	var x = d3.scale.linear().range([0, width]);
+	var x = d3.time.scale().range([0, width]);
 	var y = d3.scale.linear().range([height - 10, 0]);
 	
-	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(10).tickFormat(d3.format("d"));
+	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.years);
 	var yAxisLeft = d3.svg.axis().scale(y).orient("left");
 	var yAxisRight = d3.svg.axis().scale(y).orient("right");
 
@@ -101,7 +101,7 @@ function buildChart(uri) {
 
 	function addToolTip(d, i) {
 		console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
-		console.log(d);
+		console.log();
 
 		var mouseDate = x.invert(d3.event.pageX);
 		var bisectDate = d3.bisector(function(d) { return d.x; }).left;
