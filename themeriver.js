@@ -98,7 +98,7 @@ function buildChart(uri) {
 		removeToolTip();
 	}
 
-	function addToolTip(d, i) {
+	function addToolTip(d) {
 		console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
 		console.log(d);
 
@@ -110,17 +110,12 @@ function buildChart(uri) {
 		var d1 = d[i];
 
 		var datum = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
-		console.log(d0);
-		console.log(d1);
-		console.log("i: " + i + ", d0: " + d0 + ", d1: " + d1);
-
-		// var x = x(d[0]);
-		// var y = y(d[1]);
+		console.log(datum);
 
 		d3.select("#tooltip")
 		.style("top", d3.event.pageY - 10)
 		.style("left", d3.event.pageX + 10)
-		.html("(" + d.key + ", " + datum.x + ", " + datum.y + ")");
+		.html("(" + datum.key + ", " + datum.x + ", " + datum.y + ")");
 	}
 
 	function removeToolTip() {
