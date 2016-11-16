@@ -50,7 +50,6 @@ function buildChart() {
 	.append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var layerTitles = [];
 	var headers = d3.keys(data[0]);
 
 	// Remove League
@@ -61,7 +60,6 @@ function buildChart() {
 	.offset("silhouette")
 	.order(invertedLayers ? "reverse" : "default")
 	(data.map(function(d) {
-		layerTitles.push(d.League);
 		return headers.map(function(c) {
 			return {x: c, y: +d[c], key: d.League};
 		});
@@ -102,9 +100,6 @@ function buildChart() {
 	.on("mouseout", toolTipMouseOut)
 	.on("mousemove", addToolTip);
 
-	addReordering(layerTitles);
-
-
 	function toolTipMouseOver(d, i) {
 		d3.selectAll(".layer").style("opacity", 0.2);
 
@@ -141,20 +136,6 @@ function buildChart() {
 
 	function removeToolTip() {
 		d3.select("#tooltip").style("display", "none");
-	}
-
-	function addReordering(titles) {
-		var ul = d3.select("#graph").append("ul")
-		.style("float", "right")
-		.attr("class", "sortable")
-		.attr("id", "sortable");
-
-		titles.forEach(function(t) {
-			ul.append("li")
-			.attr("class", "ui-state-default")
-			.attr("id", t)
-			.html(t);
-		});
 	}
 }
 
@@ -220,6 +201,15 @@ function uploadFile() {
 		parseCSVData(dataString);
 	}
 	reader.readAsText(file);
+}
+
+function invertData() {
+	invertedLayers = !invertedLayers;
+	if (usingDefaultData) {
+		getCSVData(dataUri);
+	} else {
+		parseCSVData(lastUploadedCSV);
+	}
 }
 
 $(window).resize(function(){

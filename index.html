@@ -2,7 +2,6 @@
 <head> 
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="themeriver.css" />
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 	<title>Theme River</title>
 </head>
 
@@ -26,10 +25,12 @@
 		</div>
 	</form>
 
+	<div class="row" style="float:right;">
+		<input type="button" id="invert" onclick="invertData()" value="Invert Data"/>
+	</div>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="d3.v3.min.js"></script>
-	<script type="text/javascript" src="Colour.js"></script>
 	<script type="text/javascript" src="themeriver.js"></script>
 </body>
 </html>
