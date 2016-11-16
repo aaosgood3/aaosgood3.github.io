@@ -110,7 +110,6 @@ function buildChart(uri) {
 		var d1 = d[i];
 
 		var datum = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
-		console.log(datum);
 
 		d3.select("#tooltip")
 		.style("top", d3.event.pageY - 10)
