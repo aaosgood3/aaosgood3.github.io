@@ -176,8 +176,36 @@ function createToolTip() {
 // 	return new RGBColour(r, g, b);
 // }
 
-function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+// function getRandomInt(min, max) {
+// 	return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
+
+function fileSelected() {
+	var file = document.getElementById('fileToUpload').files[0];
+	if (file) {
+		var fileSize = 0;
+		if (file.size > 1024 * 1024) {
+			fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+		} else {
+			fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+		}
+
+		document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
+		document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
+		document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+	}
+}
+
+function uploadFile(event) {
+	var file = event.target.files[0];
+
+	var reader = new FileReader();
+	reader.onload = function() {
+		var dataUrl = reader.result;
+		document.getElementById("graph").innerHTML = "";
+		buildChart(dataUrl);
+	}
+	reader.readAsText(file);
 }
 
 
