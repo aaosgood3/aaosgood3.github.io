@@ -99,9 +99,6 @@ function buildChart(uri) {
 	}
 
 	function addToolTip(d) {
-		console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
-		console.log(d);
-
 		var mouseDate = x.invert(d3.event.pageX);
 		var bisectDate = d3.bisector(function(d) { return d.x; }).left;
 		var i = bisectDate(d, mouseDate);
