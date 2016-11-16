@@ -10,6 +10,9 @@ var height = 400 - margin.top - margin.bottom;
 
 var invertedLayers = false;
 
+var usingDefaultData = true;
+var lastUploadedCSV = "";
+
 getCSVData(dataUri);
 
 function getCSVData(uri) {
@@ -20,6 +23,9 @@ function getCSVData(uri) {
 }
 
 function parseCSVData(string) {
+	lastUploadedCSV = string;
+	usingDefaultData = false;
+
 	var data = d3.csv.parse(string);
 	dataGlobal = data;
 	buildChart();
@@ -220,5 +226,9 @@ function uploadFile() {
 
 $(window).resize(function(){
 	document.getElementById("graph").innerHTML = "";
-	buildChart();
+	if (usingDefaultData) {
+		getCSVData(dataUri);
+	} else {
+		parseCSVData(lastUploadedCSV);
+	}
 });
