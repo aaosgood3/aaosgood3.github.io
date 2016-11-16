@@ -219,6 +219,7 @@ function uploadFile() {
 	reader.onload = function() {
 		var dataString = reader.result;
 		document.getElementById("graph").innerHTML = "";
+		document.getElementById('title').innerHTML = document.getElementById('fileName').innerHTML;
 		parseCSVData(dataString);
 	}
 	reader.readAsText(file);
