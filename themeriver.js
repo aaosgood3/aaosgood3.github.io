@@ -11,7 +11,6 @@ var height = 400 - margin.top - margin.bottom;
 var invertedLayers = false;
 
 getCSVData(dataUri);
-createToolTip();
 
 function getCSVData(uri) {
 	d3.csv(uri, function(data) {
@@ -25,6 +24,7 @@ function parseCSVData(string) {
 }
 
 function buildChart(data) {
+	createToolTip();
 
 	var strokeColor = "#fff";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 
