@@ -1,6 +1,7 @@
 var dataUri = "data.csv";
 //var colors = [new RGBColour(108,209,230), new RGBColour(224,227,204),new RGBColour(250,104,0)];
 var colors = d3.scale.category20();
+var dataGlobal = [];
 var years = [];
 
 var margin = {top: 20, right: 40, bottom: 30, left: 30};
@@ -28,6 +29,12 @@ function buildChart(uri) {
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	d3.csv(uri, function(data) {
+		if (dataGlobal.length = 0) {
+			dataGlobal = data;
+		} else {
+			data = dataGlobal;
+		}
+
 		var headers = d3.keys(data[0]);
 
 		// Remove League
@@ -70,10 +77,17 @@ function buildChart(uri) {
 		.attr("class", "y axis")
 		.call(yAxisLeft);
 
+		var drag = d3.behavior.drag()
+		.origin(function(d) { return d; })
+		.on("dragstart", dragStarted)
+		.on("drag", drag)
+		.on("dragend", dragEnded);
+
 		svg.selectAll(".layer")
 		.on("mouseover", toolTipMouseOver)
 		.on("mouseout", toolTipMouseOut)
-		.on("mousemove", addToolTip);
+		.on("mousemove", addToolTip)
+		.call(drag);
 	});
 
 	function toolTipMouseOver(d, i) {
@@ -112,6 +126,18 @@ function buildChart(uri) {
 
 	function removeToolTip() {
 		d3.select("#tooltip").style("display", "none");
+	}
+
+	function dragStarted(d) {
+		d3.event.sourceEvent.stopPropagation();
+	}
+
+	function drag(d) {
+
+	}
+
+	function dragEnded(d) {
+
 	}
 }
 
