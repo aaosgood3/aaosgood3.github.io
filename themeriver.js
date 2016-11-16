@@ -1,7 +1,6 @@
 var dataUri = "data.csv";
 //var colors = [new RGBColour(108,209,230), new RGBColour(224,227,204),new RGBColour(250,104,0)];
 var colors = d3.scale.category20();
-var dataGlobal = [];
 var years = [];
 
 var margin = {top: 20, right: 40, bottom: 30, left: 30};
@@ -15,10 +14,10 @@ function buildChart(uri) {
 
 	var strokeColor = "#fff";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 
-	var x = d3.time.scale().range([0, width]);
+	var x = d3.scale.linear().range([0, width]);
 	var y = d3.scale.linear().range([height - 10, 0]);
 	
-	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.years);
+	var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(10).tickFormat(d3.format("d"));
 	var yAxisLeft = d3.svg.axis().scale(y).orient("left");
 	var yAxisRight = d3.svg.axis().scale(y).orient("right");
 
@@ -33,11 +32,11 @@ function buildChart(uri) {
 
 		// Remove League
 		headers.splice(headers.indexOf('League'), 1);
+		years = headers;
 
 		var layers = d3.layout.stack().offset("silhouette")(data.map(function(d) {
 			return headers.map(function(c) {
-				dataGlobal.push(d);
-				return {x: c, y: +d[c]};
+				return {x: c, y: +d[c], key: d.League};
 			});
 		}));
 
@@ -101,7 +100,7 @@ function buildChart(uri) {
 
 	function addToolTip(d, i) {
 		console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
-		console.log();
+		console.log(d);
 
 		var mouseDate = x.invert(d3.event.pageX);
 		var bisectDate = d3.bisector(function(d) { return d.x; }).left;
@@ -112,8 +111,8 @@ function buildChart(uri) {
 
 		var d = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
 
-		var x = xScale(d[0]);
-		var y = yScale(d[1]);
+		var x = x(d[0]);
+		var y = y(d[1]);
 
 		d3.select("#tooltip")
 		.style("top", d3.event.pageY - 10)
