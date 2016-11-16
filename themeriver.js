@@ -152,7 +152,7 @@ function buildChart() {
 
 	function drag(d) {
 		d3.select(this).attr("transform", function(d,i){
-			return "translate(" + [ d.x,d.y ] + ")"
+			return "translate(" + d.x + "," + d.y + ")"
 		})
 	}
 
