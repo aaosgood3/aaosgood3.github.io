@@ -85,7 +85,7 @@ function buildChart(uri) {
 		d3.select(this)
 		.style("opacity", "1")
 		.style("stroke", strokeColor)
-		.style("stroke-width", "3px")
+		.style("stroke-width", "5px")
 		.style("fill", "#F3F315");
 	}
 
@@ -105,7 +105,7 @@ function buildChart(uri) {
 
 	function addToolTip(d, i) {
 		console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
-		console.log(dataGlobal[i]);
+		console.log(d);
 
 		d3.select("#tooltip")
 		.style("top", d3.event.pageY - 10)
