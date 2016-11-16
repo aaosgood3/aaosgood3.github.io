@@ -8,6 +8,8 @@ var margin = {top: 20, right: 40, bottom: 30, left: 30};
 var width = document.body.clientWidth - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
 
+var invertedLayers = false;
+
 buildChart(dataUri);
 createToolTip();
 
@@ -41,7 +43,10 @@ function buildChart(uri) {
 		headers.splice(headers.indexOf('League'), 1);
 		years = headers;
 
-		var layers = d3.layout.stack().offset("silhouette")(data.map(function(d) {
+		var layers = d3.layout.stack()
+		.offset("silhouette")
+		.order(invertedLayers ? "reverse" : "default")
+		(data.map(function(d) {
 			return headers.map(function(c) {
 				return {x: c, y: +d[c], key: d.League};
 			});
