@@ -12,7 +12,7 @@
 
 	<div id="graph" class="graph"> </div>
 
-	<form id="form1" enctype="multipart/form-data" method="post">
+	<form id="form1">
 		<div class="row">
 			<label for="fileToUpload">Select a File to Upload</label><br />
 			<input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" onchange="fileSelected();"/>
@@ -23,7 +23,6 @@
 		<div class="row">
 			<input type="button" onclick="uploadFile(event)" value="Upload" />
 		</div>
-		<div id="progressNumber"></div>
 	</form>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
