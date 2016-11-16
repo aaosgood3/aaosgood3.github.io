@@ -99,7 +99,7 @@ function buildChart(data) {
 	.call(drag);
 
 	function toolTipMouseOver(d, i) {
-		d3.selectAll(".layer").attr("opacity", 0.5);
+		d3.selectAll(".layer").style("opacity", 0.5);
 
 		d3.select("#tooltip").style("display", "inline");
 
@@ -111,7 +111,7 @@ function buildChart(data) {
 	}
 
 	function toolTipMouseOut(d, i) {
-		d3.selectAll(".layer").attr("opacity", 1);
+		d3.selectAll(".layer").style("opacity", 1);
 
 		d3.select(this)
 		.style("stroke-width", "0px")
