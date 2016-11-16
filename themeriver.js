@@ -73,19 +73,20 @@ function buildChart(uri) {
 
 		svg.selectAll(".layer")
 		.on("mouseover", toolTipMouseOver)
-		.on("mouseout", toolTipMouseOut);
+		.on("mouseout", toolTipMouseOut)
+		.on("mousemove", addToolTip);
 	});
 
 	function toolTipMouseOver(d, i) {
 		d3.selectAll(".layer").attr("opacity", 0.5);
+
+		d3.select("#tooltip").style("display", "inline");
 
 		d3.select(this)
 		.style("opacity", "1")
 		.style("stroke", strokeColor)
 		.style("stroke-width", "3px")
 		.style("fill", "#F3F315");
-
-		addToolTip(d, i);
 	}
 
 	function toolTipMouseOut(d, i) {
@@ -98,12 +99,15 @@ function buildChart(uri) {
 		removeToolTip();
 	}
 
+	function toolTipMouseMove(d, i) {
+
+	}
+
 	function addToolTip(d, i) {
 		console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
 		console.log(dataGlobal[i]);
 
 		d3.select("#tooltip")
-		.style("display", "inline")
 		.style("top", d3.event.pageY - 10)
 		.style("left", d3.event.pageX + 10)
 		.html("(" + d.key + ", " + d.x + ", " + d.y + ")");
