@@ -225,6 +225,7 @@ function uploadFile() {
 }
 
 $(window).resize(function(){
+	console.log("resized");
 	document.getElementById("graph").innerHTML = "";
 	if (usingDefaultData) {
 		getCSVData(dataUri);
