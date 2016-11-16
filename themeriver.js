@@ -151,7 +151,7 @@ function buildChart() {
 
 		titles.forEach(function(t) {
 			ul.append("li")
-			.attr("class", ".ui-state-default")
+			.attr("class", "ui-state-default")
 			.attr("id", t)
 			.html(t);
 		});
