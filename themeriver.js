@@ -1,7 +1,7 @@
 var dataUri = "data.csv";
-//var colors = [new RGBColour(108,209,230), new RGBColour(224,227,204),new RGBColour(250,104,0)];
+var dataGlobal;
+
 var colors = d3.scale.category20();
-var dataGlobal = [];
 var years = [];
 
 var margin = {top: 20, right: 40, bottom: 30, left: 30};
@@ -15,7 +15,7 @@ getCSVData(dataUri);
 function getCSVData(uri) {
 	d3.csv(uri, function(data) {
 		dataGlobal = data;
-		buildChart()
+		buildChart();
 	});
 }
 
@@ -28,6 +28,7 @@ function parseCSVData(string) {
 function buildChart() {
 	createToolTip();
 	var data = dataGlobal;
+	console.log(data);
 
 	var strokeColor = "#fff";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 
@@ -144,7 +145,9 @@ function buildChart() {
 	}
 
 	function drag(d) {
-
+		d3.select(this).attr("transform", function(d,i){
+			return "translate(" + [ d.x,d.y ] + ")"
+		})
 	}
 
 	function dragEnded(d) {
