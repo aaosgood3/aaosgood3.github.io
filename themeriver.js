@@ -31,11 +31,11 @@ function buildChart(uri) {
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	d3.csv(uri, function(data) {
-		if (dataGlobal.length = 0) {
-			dataGlobal = data;
-		} else {
-			data = dataGlobal;
-		}
+		// if (dataGlobal.length = 0) {
+		// 	dataGlobal = data;
+		// } else {
+		// 	data = dataGlobal;
+		// }
 
 		var headers = d3.keys(data[0]);
 
