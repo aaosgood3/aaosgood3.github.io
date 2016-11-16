@@ -15,19 +15,19 @@ getCSVData(dataUri);
 function getCSVData(uri) {
 	d3.csv(uri, function(data) {
 		dataGlobal = data;
-		buildChart(data)
+		buildChart()
 	});
 }
 
 function parseCSVData(string) {
 	var data = d3.csv.parse(string);
 	dataGlobal = data;
-	buildChart(data);
+	buildChart();
 }
 
-function buildChart(data) {
-	dataGlobal
+function buildChart() {
 	createToolTip();
+	var data = dataGlobal;
 
 	var strokeColor = "#fff";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 
@@ -215,8 +215,7 @@ function uploadFile() {
 	reader.readAsText(file);
 }
 
-
 $(window).resize(function(){
 	document.getElementById("graph").innerHTML = "";
-	buildChart(dataGlobal);
+	buildChart();
 });
