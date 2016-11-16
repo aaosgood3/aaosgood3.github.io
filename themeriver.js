@@ -57,6 +57,7 @@ function buildChart() {
 	years = headers;
 
 	if (invertedLayers) {
+		console.log("reverse");
 		data.reverse();
 	}
 
