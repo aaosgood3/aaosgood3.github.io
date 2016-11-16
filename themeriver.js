@@ -10,10 +10,21 @@ var height = 400 - margin.top - margin.bottom;
 
 var invertedLayers = false;
 
-buildChart(dataUri);
+getCSVData(dataUri);
 createToolTip();
 
-function buildChart(uri) {
+function getCSVData(uri) {
+	d3.csv(uri, function(data) {
+		buildChart(data)
+	});
+}
+
+function parseCSVData(string) {
+	var data = d3.csv.parse(string);
+	buildChart(data);
+}
+
+function buildChart(data) {
 
 	var strokeColor = "#fff";//randomColorMix(colors[0].getRGB(), colors[1].getRGB(), colors[2].getRGB(), 1);
 
@@ -30,70 +41,62 @@ function buildChart(uri) {
 	.append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.csv(uri, function(data) {
-		// if (dataGlobal.length = 0) {
-		// 	dataGlobal = data;
-		// } else {
-		// 	data = dataGlobal;
-		// }
+	var headers = d3.keys(data[0]);
 
-		var headers = d3.keys(data[0]);
+	// Remove League
+	headers.splice(headers.indexOf('League'), 1);
+	years = headers;
 
-		// Remove League
-		headers.splice(headers.indexOf('League'), 1);
-		years = headers;
+	var layers = d3.layout.stack()
+	.offset("silhouette")
+	.order(invertedLayers ? "reverse" : "default")
+	(data.map(function(d) {
+		return headers.map(function(c) {
+			return {x: c, y: +d[c], key: d.League};
+		});
+	}));
 
-		var layers = d3.layout.stack()
-		.offset("silhouette")
-		.order(invertedLayers ? "reverse" : "default")
-		(data.map(function(d) {
-			return headers.map(function(c) {
-				return {x: c, y: +d[c], key: d.League};
-			});
-		}));
+	x.domain(d3.extent(layers[0], function(d) { return d.x; }));
+	y.domain([0, d3.max(layers[layers.length - 1], function(d) { return d.y0 + d.y; })]);
 
-		x.domain(d3.extent(layers[0], function(d) { return d.x; }));
-		y.domain([0, d3.max(layers[layers.length - 1], function(d) { return d.y0 + d.y; })]);
+	var area = d3.svg.area()
+	.interpolate("cardinal")
+	.x(function(d) { return x(d.x); })
+	.y0(function(d) { return y(d.y0); })
+	.y1(function(d) { return y(d.y0 + d.y); });
 
-		var area = d3.svg.area()
-		.interpolate("cardinal")
-		.x(function(d) { return x(d.x); })
-		.y0(function(d) { return y(d.y0); })
-		.y1(function(d) { return y(d.y0 + d.y); });
+	var layer = svg.selectAll(".layer")
+	.data(layers)
+	.enter().append("path")
+	.attr("class", "layer")
+	.attr("d", function(d) { return area(d); })
+	.style("fill", function(d, i) { return colors(i); });
 
-		var layer = svg.selectAll(".layer")
-		.data(layers)
-		.enter().append("path")
-		.attr("class", "layer")
-		.attr("d", function(d) { return area(d); })
-		.style("fill", function(d, i) { return colors(i); });
+	svg.append("g")
+	.attr("class", "x axis")
+	.attr("transform", "translate(0," + height + ")")
+	.call(xAxis);
 
-		svg.append("g")
-		.attr("class", "x axis")
-		.attr("transform", "translate(0," + height + ")")
-		.call(xAxis);
+	svg.append("g")
+	.attr("class", "y axis")
+	.attr("transform", "translate(" + width + ", 0)")
+	.call(yAxisRight);
 
-		svg.append("g")
-		.attr("class", "y axis")
-		.attr("transform", "translate(" + width + ", 0)")
-		.call(yAxisRight);
+	svg.append("g")
+	.attr("class", "y axis")
+	.call(yAxisLeft);
 
-		svg.append("g")
-		.attr("class", "y axis")
-		.call(yAxisLeft);
+	var drag = d3.behavior.drag()
+	.origin(function(d) { return d; })
+	.on("dragstart", dragStarted)
+	.on("drag", drag)
+	.on("dragend", dragEnded);
 
-		var drag = d3.behavior.drag()
-		.origin(function(d) { return d; })
-		.on("dragstart", dragStarted)
-		.on("drag", drag)
-		.on("dragend", dragEnded);
-
-		svg.selectAll(".layer")
-		.on("mouseover", toolTipMouseOver)
-		.on("mouseout", toolTipMouseOut)
-		.on("mousemove", addToolTip)
-		.call(drag);
-	});
+	svg.selectAll(".layer")
+	.on("mouseover", toolTipMouseOver)
+	.on("mouseout", toolTipMouseOut)
+	.on("mousemove", addToolTip)
+	.call(drag);
 
 	function toolTipMouseOver(d, i) {
 		d3.selectAll(".layer").attr("opacity", 0.5);
@@ -201,9 +204,9 @@ function uploadFile() {
 
 	var reader = new FileReader();
 	reader.onload = function() {
-		var dataUrl = reader.result;
+		var dataString = reader.result;
 		document.getElementById("graph").innerHTML = "";
-		buildChart(dataUrl);
+		parseCSVData(dataString);
 	}
 	reader.readAsText(file);
 }
