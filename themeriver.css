@@ -26,3 +26,16 @@ p {
 #submit {
     display: none;
 }
+
+#sortable { 
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 60%; 
+}
+
+#sortable li {
+    margin: 0 3px 3px 3px;
+    padding: 3px;
+    font-size: 12px helvetica;
+}

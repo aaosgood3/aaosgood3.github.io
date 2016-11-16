@@ -50,6 +50,7 @@ function buildChart() {
 	.append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+	var layerTitles = [];
 	var headers = d3.keys(data[0]);
 
 	// Remove League
@@ -60,6 +61,7 @@ function buildChart() {
 	.offset("silhouette")
 	.order(invertedLayers ? "reverse" : "default")
 	(data.map(function(d) {
+		layerTitles.push(d.League);
 		return headers.map(function(c) {
 			return {x: c, y: +d[c], key: d.League};
 		});
@@ -95,20 +97,16 @@ function buildChart() {
 	.attr("class", "y axis")
 	.call(yAxisLeft);
 
-	var drag = d3.behavior.drag()
-	.origin(function(d) { return d; })
-	.on("dragstart", dragStarted)
-	.on("drag", drag)
-	.on("dragend", dragEnded);
-
 	svg.selectAll(".layer")
 	.on("mouseover", toolTipMouseOver)
 	.on("mouseout", toolTipMouseOut)
-	.on("mousemove", addToolTip)
-	.call(drag);
+	.on("mousemove", addToolTip);
+
+	addReordering(layerTitles);
+
 
 	function toolTipMouseOver(d, i) {
-		d3.selectAll(".layer").style("opacity", 0.5);
+		d3.selectAll(".layer").style("opacity", 0.2);
 
 		d3.select("#tooltip").style("display", "inline");
 
@@ -145,21 +143,19 @@ function buildChart() {
 		d3.select("#tooltip").style("display", "none");
 	}
 
-	function dragStarted(d) {
-		d3.event.sourceEvent.stopPropagation();
-	}
+	function addReordering(titles) {
+		var ul = d3.select("#form1").append("ul")
+		.attr("id", "sortable");
 
-	function drag(d) {
-		console.log(d);
-		d.x += d3.event.dx;
-		d.y += d3.event.dy;
-		d3.select(this).attr("transform", function(d,i){
-			return "translate(" + d.x + "," + d.y + ")"
-		})
-	}
+		titles.forEach(function(t) {
+			ul.append("li")
+			.attr("class", "ui-state-default")
+			.attr("id", t)
+			.html(t);
+		});
 
-	function dragEnded(d) {
-
+		$("#sortable").sortable();
+		$("#sortable").disableSelection();
 	}
 }
 
