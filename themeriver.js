@@ -150,13 +150,10 @@ function buildChart() {
 
 		titles.forEach(function(t) {
 			ul.append("li")
-			.attr("class", "ui-state-default ui-icon")
+			.attr("class", "ui-state-default")
 			.attr("id", t)
 			.html(t);
 		});
-
-		$("#sortable").sortable();
-		$("#sortable").disableSelection();
 	}
 }
 
