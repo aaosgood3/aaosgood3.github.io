@@ -99,16 +99,16 @@ function buildChart(uri) {
 		removeToolTip();
 	}
 
-	function addToolTip(data, i) {
+	function addToolTip(d, i) {
 		console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
-		console.log(data);
+		console.log(d);
 
-		var mouseDate = xAxis.invert(d3.event.pageX);
+		var mouseDate = x.invert(d3.event.pageX);
 		var bisectDate = d3.bisector(function(d) { return d.x; }).left;
-		var i = bisectDate(data, mouseDate);
+		var i = bisectDate(d, mouseDate);
 
-		var d0 = data[i - 1]
-		var d1 = data[i];
+		var d0 = d[i - 1];
+		var d1 = d[i];
 
 		var d = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
 
