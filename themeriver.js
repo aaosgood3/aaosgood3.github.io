@@ -224,12 +224,11 @@ function uploadFile() {
 	reader.readAsText(file);
 }
 
-$(window).resize(function(){
-	console.log("resized");
-	document.getElementById("graph").innerHTML = "";
-	if (usingDefaultData) {
-		getCSVData(dataUri);
-	} else {
-		parseCSVData(lastUploadedCSV);
-	}
-});
+// $(window).resize(function(){
+// 	document.getElementById("graph").innerHTML = "";
+// 	if (usingDefaultData) {
+// 		getCSVData(dataUri);
+// 	} else {
+// 		parseCSVData(lastUploadedCSV);
+// 	}
+// });
