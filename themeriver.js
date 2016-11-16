@@ -77,45 +77,53 @@ function buildChart(uri) {
 		.on("mousemove", addToolTip);
 	});
 
-	function toolTipMouseOver(d, i) {
-		d3.selectAll(".layer").attr("opacity", 0.5);
+function toolTipMouseOver(d, i) {
+	d3.selectAll(".layer").attr("opacity", 0.5);
 
-		d3.select("#tooltip").style("display", "inline");
+	d3.select("#tooltip").style("display", "inline");
 
-		d3.select(this)
-		.style("opacity", "1")
-		.style("stroke", strokeColor)
-		.style("stroke-width", "5px")
-		.style("fill", "#F3F315");
-	}
+	d3.select(this)
+	.style("opacity", "1")
+	.style("stroke", strokeColor)
+	.style("stroke-width", "5px")
+	.style("fill", "#F3F315");
+}
 
-	function toolTipMouseOut(d, i) {
-		d3.selectAll(".layer").attr("opacity", 1);
+function toolTipMouseOut(d, i) {
+	d3.selectAll(".layer").attr("opacity", 1);
 
-		d3.select(this)
-		.style("stroke-width", "0px")
-		.style("fill", colors(i));
+	d3.select(this)
+	.style("stroke-width", "0px")
+	.style("fill", colors(i));
 
-		removeToolTip();
-	}
+	removeToolTip();
+}
 
-	function toolTipMouseMove(d, i) {
+function addToolTip(data, i) {
+	console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
+	console.log(data);
 
-	}
+	var mouseDate = xScale.invert(d3.event.pageX);
+	var bisectDate = d3.bisector(function(d) { return d.x; }).left;
+	var i = bisectDate(data, mouseDate);
 
-	function addToolTip(d, i) {
-		console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
-		console.log(d);
+	var d0 = data[i - 1]
+	var d1 = data[i];
 
-		d3.select("#tooltip")
-		.style("top", d3.event.pageY - 10)
-		.style("left", d3.event.pageX + 10)
-		.html("(" + d.key + ", " + d.x + ", " + d.y + ")");
-	}
+	var d = mouseDate - d0[0] > d1[0] - mouseDate ? d1 : d0;
 
-	function removeToolTip() {
-		d3.select("#tooltip").style("display", "none");
-	}
+	var x = xScale(d[0]);
+	var y = yScale(d[1]);
+
+	d3.select("#tooltip")
+	.style("top", d3.event.pageY - 10)
+	.style("left", d3.event.pageX + 10)
+	.html("(" + d.key + ", " + x + ", " + y + ")");
+}
+
+function removeToolTip() {
+	d3.select("#tooltip").style("display", "none");
+}
 }
 
 function createToolTip() {
