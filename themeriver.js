@@ -73,7 +73,7 @@ function buildChart(uri) {
 		svg.selectAll(".layer")
 		.on("mouseover", toolTipMouseOver)
 		.on("mouseout", toolTipMouseOut)
-		// .on("mousemove", addToolTip);
+		.on("mousemove", addToolTip);
 	});
 
 	function toolTipMouseOver(d, i) {
