@@ -196,6 +196,7 @@ function fileSelected() {
 		document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
 		document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
 		document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+		document.getElementById('submit').css("display", "inline");
 	}
 }
 

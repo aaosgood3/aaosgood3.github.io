@@ -22,3 +22,7 @@ p {
     font: 12px helvetica;
     margin: 3px 0px;
 }
+
+#submit {
+    display: none;
+}
