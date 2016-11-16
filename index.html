@@ -17,9 +17,9 @@
 			<label for="fileToUpload">Select a File to Upload</label><br />
 			<input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" onchange="fileSelected();"/>
 		</div>
-		<div id="fileName"></div>
-		<div id="fileSize"></div>
-		<div id="fileType"></div>
+		<div id="fileName" class="fileDetail"></div>
+		<div id="fileSize" class="fileDetail"></div>
+		<div id="fileType" class="fileDetail"></div>
 		<div class="row">
 			<input type="button" onclick="uploadFile()" value="Upload" />
 		</div>
