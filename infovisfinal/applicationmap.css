@@ -10,19 +10,8 @@ p {
     font: 12px helvetica;
 }
 
-.axis path,
-.axis line {
-    fill: none;
-    stroke: #000;
-    stroke-width: 3px;
-    shape-rendering: crispEdges;
-}
-
-.fileDetail {
-    font: 12px helvetica;
-    margin: 3px 0px;
-}
-
-#submit {
-    display: none;
+path {
+  stroke: white;
+  stroke-width: 0.25px;
+  fill: grey;
 }
