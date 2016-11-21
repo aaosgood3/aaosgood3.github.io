@@ -1,0 +1,8 @@
+Extra Credit:
+
+1. Compiled real world data from www.statista.com
+2. Can upload a custom CSV file and display it
+3. Can invert the data to help visualize
+4. Highlight the currently selected layer in bright yellow
+5. Dim all the other layers when you're hovering on a layer
+6. Graph resizes with the window
