@@ -18,7 +18,7 @@ var g = svg.append("g");
 // load and display the World
 d3.json("world-110m2.json", function(error, topology) {
     g.selectAll("path")
-      .data(topojson.object(topology, topology.objects.countries)
+      .data(topojson.objects(topology, topology.objects.countries)
           .geometries)
     .enter()
       .append("path")
