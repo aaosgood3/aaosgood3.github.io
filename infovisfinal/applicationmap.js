@@ -26,7 +26,6 @@ var g = svg.append("g");
 
 d3.json("world-110m2.json", function(error, topology) {
 	d3.csv("data.csv", function(data) {
-		console.log(data);
 		minDate = parseDate(data[0].Time);
 		maxDate = parseDate(data[data.length-1].Time);
 
