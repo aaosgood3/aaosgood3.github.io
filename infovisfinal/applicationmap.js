@@ -1,3 +1,4 @@
+
 var width = 960,
     height = 500;
 
@@ -9,6 +10,15 @@ var svg = d3.select("#graph").append("svg")
     .attr("width", width)
     .attr("height", height);
 
+var tip = d3.tip()
+	.attr('class', 'd3-tip')
+	.offset([-10, 0])
+	.html(function(d) {
+		return "<strong>University:</strong> <span style='color:#8c3752'>" + d.University + "</span>";
+	});
+
+svg.call(tip);
+
 var path = d3.geo.path()
     .projection(projection);
 
@@ -17,9 +27,8 @@ var g = svg.append("g");
 d3.json("world-110m2.json", function(error, topology) {
 	d3.csv("data.csv", function(data) {
 		console.log(data);
-		minDate = data[0].Time;
-		maxDate = data[data.length-1].Time;
-		console.log("Min: " + minDate + ", Max: " + maxDate);
+		minDate = parseDate(data[0].Time);
+		maxDate = parseDate(data[data.length-1].Time);
 
 		g.selectAll("circle")
 			.data(data)
@@ -32,7 +41,9 @@ d3.json("world-110m2.json", function(error, topology) {
 				return projection([d.Lng, d.Lat])[1];
 			})
 			.attr("r", 5)
-			.style("fill", "#8c3752");
+			.style("fill", "#8c3752")
+			.on('mouseover', tip.show)
+      		.on('mouseout', tip.hide);
 	});
 
     g.selectAll("path")
@@ -54,3 +65,4 @@ var zoom = d3.behavior.zoom()
   });
 
 svg.call(zoom);
+
