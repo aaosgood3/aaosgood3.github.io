@@ -26,8 +26,8 @@ d3.json("world-110m2.json", function(error, topology) {
 			.attr("cy", function(d) {
 				return projection([d.Lng, d.Lat])[1];
 			})
-			.attr("r", 3)
-			.style("fill", "black");
+			.attr("r", 5)
+			.style("fill", "#8c3752");
 	});
 
     g.selectAll("path")
