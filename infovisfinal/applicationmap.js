@@ -22,10 +22,10 @@ d3.json("world-110m2.json", function(error, topology) {
 			.append("circle")
 			.attr("cx", function(d) {
 				console.log(d);
-				return projection([d.Lng, d.Lat][0]);
+				return projection([+d.Lng, +d.Lat][0]);
 			})
 			.attr("cy", function(d) {
-				return projection([d.Lng, d.Lat][1]);
+				return projection([+d.Lng, +d.Lat][1]);
 			})
 			.attr("r", 3)
 			.style("fill", "black");
