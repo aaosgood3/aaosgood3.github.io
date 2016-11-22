@@ -16,6 +16,11 @@ var g = svg.append("g");
 
 d3.json("world-110m2.json", function(error, topology) {
 	d3.csv("data.csv", function(data) {
+		console.log(data);
+		minDate = data[0].Time;
+		maxDate = data[data.length-1].Time;
+		console.log("Min: " + minDate + ", Max: " + maxDate);
+
 		g.selectAll("circle")
 			.data(data)
 			.enter()
