@@ -1,3 +1,5 @@
+var locationData;
+
 var width = 960,
     height = 500;
 
@@ -39,7 +41,7 @@ d3.json("world-110m2.json", function(error, topology) {
 		})
 		.get(function(err, rows) {
     		if (err) return console.error(err);
-    		window.site_data = rows;
+    		locationData = rows;
     	});
 
     g.selectAll("path")
@@ -88,9 +90,8 @@ var displaySites = function(data) {
       .remove();
 };
 
-var data = window.site_data;
-var minDateUnix = moment(data[0].Time, "YYYY MM DD").unix();
-var maxDateUnix = moment(data[_(site_data).length-1].Time, "YYYY MM DD").unix();
+var minDateUnix = moment(locationData[0].Time, "YYYY MM DD").unix();
+var maxDateUnix = moment(locationData[locationData.length-1].Time, "YYYY MM DD").unix();
 var secondsInDay = 60 * 60 * 24;
 
 var updateData = d3.slider()
