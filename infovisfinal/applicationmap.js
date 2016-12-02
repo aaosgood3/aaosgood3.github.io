@@ -88,14 +88,15 @@ var displaySites = function(data) {
       .remove();
 };
 
-var minDateUnix = moment(_(site_data)[0].Time, "YYYY MM DD").unix();
-var maxDateUnix = moment(_(site_data)[_(site_data).length-1].Time, "YYYY MM DD").unix();
+var data = window.site_data;
+var minDateUnix = moment(data[0].Time, "YYYY MM DD").unix();
+var maxDateUnix = moment(data[_(site_data).length-1].Time, "YYYY MM DD").unix();
 var secondsInDay = 60 * 60 * 24;
 
 var updateData = d3.slider()
   .axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
   .on("slide", function(evt, value) {
-    var newData = _(site_data).filter( function(site) {
+    var newData = data.filter( function(site) {
       return site.time < value;
     })
     displaySites(newData);
