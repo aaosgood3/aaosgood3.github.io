@@ -16,6 +16,12 @@ path {
   fill: grey;
 }
 
+.site {
+  stroke-width: .5px;
+  stroke: #333;
+  fill: #9cf;
+}
+
 .d3-tip {
   line-height: 1;
   font-weight: bold;
