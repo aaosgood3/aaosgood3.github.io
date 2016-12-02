@@ -88,8 +88,8 @@ var displaySites = function(data) {
       .remove();
 };
 
-var minDateUnix = moment(data[0].Time, "YYYY MM DD").unix();
-var maxDateUnix = moment(data[data.length-1].Time, "YYYY MM DD").unix();
+var minDateUnix = moment(_(site_data)[0].Time, "YYYY MM DD").unix();
+var maxDateUnix = moment(_(site_data)[_(site_data).length-1].Time, "YYYY MM DD").unix();
 var secondsInDay = 60 * 60 * 24;
 
 var updateData = d3.slider()
