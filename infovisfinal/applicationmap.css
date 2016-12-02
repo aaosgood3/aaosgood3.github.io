@@ -19,7 +19,8 @@ path {
 .site {
   stroke-width: .5px;
   stroke: #333;
-  fill: #9cf;
+  fill: #fff;
+  fill-opacity: 0.0;
 }
 
 .d3-tip {
