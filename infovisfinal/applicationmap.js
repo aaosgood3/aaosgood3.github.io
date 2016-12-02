@@ -63,10 +63,11 @@ d3.json("world-110m2.json", function(error, topology) {
 		var secondsInDay = 60 * 60 * 24;
 
 		var updateData = d3.slider()
-		.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
+		.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(true)
 		// .axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
 		.on("slide", function(evt, value) {
 			var newData = data.filter( function(d) {
+				console.log(value);
 				var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix();
 				return time < value;
 			});
