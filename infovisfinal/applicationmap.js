@@ -46,7 +46,9 @@ d3.json("world-110m2.json", function(error, topology) {
 			})
 			.attr("r", 1)
 			.transition().duration(400)
-			.attr("r", 5)
+			.attr("r", 5);
+
+			d3.selectAll("circle")
 			.on('mouseover', tip.show)
 			.on('mouseout', tip.hide);
 
