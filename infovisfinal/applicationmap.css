@@ -17,8 +17,8 @@ path {
 }
 
 .site {
-  stroke-width: .5px;
-  stroke: #333;
+  stroke-width: 1px;
+  stroke: #8c3752;
   fill: #fff;
   fill-opacity: 0.0;
 }

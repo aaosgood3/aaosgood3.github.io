@@ -59,9 +59,7 @@ d3.json("world-110m2.json", function(error, topology) {
 		};
 
 		var minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
-		console.log(data[0]);
 		var maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
-		console.log(data[data.length-1].Time);
 		var secondsInDay = 60 * 60 * 24;
 
 		var updateData = d3.slider()
@@ -69,10 +67,9 @@ d3.json("world-110m2.json", function(error, topology) {
 		// .axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
 		.on("slide", function(evt, value) {
 			var newData = data.filter( function(d) {
-				console.log(value);
 				var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix();
 				return time < value;
-			})
+			});
 			displaySites(newData);
 		});
 
