@@ -40,8 +40,10 @@ d3.json("world-110m2.json", function(error, topology) {
 			.attr("cy", function(d) {
 				return projection([d.Lng, d.Lat])[1];
 			})
-			.attr("r", 3)
-			.style("fill", "#8c3752")
+			.attr("r", 1)
+			.style("fill", "white")
+			.style("border", "#8c3752")
+			.style("fill-opacity","0.0")
 			.on('mouseover', tip.show)
       		.on('mouseout', tip.hide);
 	});
@@ -65,4 +67,27 @@ var zoom = d3.behavior.zoom()
   });
 
 svg.call(zoom);
+
+/**
+ * Window-scale functions
+ */
+
+// Zoom on window resize
+var parent = d3.select("#graph");
+
+d3.select(window)
+	.on('resize', function() {
+		var width = parent.width();
+		var height = parent.height();
+
+		// Set the map's width and height
+		svg.attr('width', width);
+		svg.attr('height', height);
+		map.setWidth(width);
+		map.setHeight(height);
+
+		// Set the timeline's width and height
+		svgTimeline.attr('width', width);
+		timeline.setWidth(width);
+	});
 
