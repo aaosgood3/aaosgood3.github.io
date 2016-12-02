@@ -1,5 +1,5 @@
-var width = 900,
-height = 600;
+var width = 960,
+height = 400;
 
 var projection = d3.geo.mercator()
 .center([0, 5])
@@ -12,7 +12,6 @@ var svg = d3.select("#graph").append("svg")
 var slider = d3.select("#graph").append("div")
 .attr("id", "slider")
 .attr("width", width)
-.style("margin", "20px 0 10px 20px");
 
 var tip = d3.tip()
 .attr('class', 'd3-tip')
