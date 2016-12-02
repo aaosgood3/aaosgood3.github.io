@@ -58,14 +58,15 @@ d3.json("world-110m2.json", function(error, topology) {
 			.remove();
 		};
 
-		var minDateUnix = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss").unix();
+		var minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
 		console.log(data[0]);
-		var maxDateUnix = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss").unix();
+		var maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
 		console.log(data[data.length-1].Time);
 		var secondsInDay = 60 * 60 * 24;
 
 		var updateData = d3.slider()
-		.axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
+		.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
+		// .axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
 		.on("slide", function(evt, value) {
 			var newData = data.filter( function(d) {
 				var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix();
