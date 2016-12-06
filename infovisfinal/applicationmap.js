@@ -60,7 +60,15 @@ function createMap() {
 				d3.selectAll("circle")
 				.on('mouseover', tip.show)
 				.on('mouseout', tip.hide)
-				.call(zoom);
+				.on("zoom", zoomCircle);
+
+				function zoomCircle() {
+					circle.attr("transform", transform);
+				}
+
+				function transform(d) {
+ 					return "translate(" + x(d[0]) + "," + y(d[1]) + ")";
+				}
 
 				sites.exit()
 				.transition().duration(200)
