@@ -15,7 +15,7 @@ function createMap() {
 	.classed("svg-container", true)
 	.append("svg")
 	.attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", "0 0 960 400")
+    .attr("viewBox", "0 0 960 600")
     .classed("svg-content-responsive", true)
     .call(zoom);
 
@@ -59,7 +59,8 @@ function createMap() {
 
 				d3.selectAll("circle")
 				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide);
+				.on('mouseout', tip.hide)
+				.call(zoom);
 
 				sites.exit()
 				.transition().duration(200)
