@@ -1,6 +1,8 @@
 var width = width * 0.8;
 var height = height * 0.8;
 
+createMap();
+
 function createMap() {
 
 	var projection = d3.geo.mercator()
