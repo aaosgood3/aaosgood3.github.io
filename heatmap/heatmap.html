@@ -13,11 +13,14 @@
             font-family: Consolas, courier;
             fill: #aaa;
         }
-        text.axis-workweek {
-            fill: #000;
-        }
-        text.axis-worktime {
-            fill: #000;
+        .dataset-button {
+            margin-left: 25px;
+            padding-left: 10px;
+            display: inline;
+            height: 50px;
+            width: 125px;
+            border-radius: 10px;
+            font-size: 24px;
         }
         .d3-tip {
             font-family: Verdana;
@@ -30,25 +33,28 @@
             text-align: center;
             border-radius: 25px;
         }
+        .dataset-picker {
+            display: inline !important;
+        }
         p {
             margin: 0px;
         }
     </style>
-    <script src="../d3.v3.min.js"></script>
+    <script src="http://d3js.org/d3.v3.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 </head>
 
 <body>
-    <h1 style="padding-left:50px;">Heatmap of Applications Received </h1>
+    <h1 style="padding-left:50px; display:inline;">Heatmap of Applications Received </h1>
+    <div id="dataset-picker" class="dataset-picker">
+    </div>
     <div id="chart"></div>
     <!--     <h3> Number of Apps</h3>
  -->
-    <div id="dataset-picker">
-    </div>
     <script type="text/javascript">
         var datasets = ["data.tsv", "data3.tsv", "data4.tsv"]; //spring semester - "data5.tsv",
-        var buttonNames = ["All", "Summer", "Fall Semester"];
+        var buttonNames = ["All", "Summer", "Fall"];
         var currentData = "data.tsv";
         var heatmapChart = function(tsvFile) {
             var margin = {
@@ -102,15 +108,13 @@
                         })
                         .style("text-anchor", "end")
                         .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
-                        .attr("class", function(d, i) {
-                            return ((i >= 0 && i <= 4) ? "dayLabel mono axis axis-workweek" : "dayLabel mono axis");
-                        });
+                        //axis-workweek
+                        .attr("class", "dayLabel mono axis ");
                     var colorScale = d3.scale.quantile()
                         .domain([0, buckets - 1, d3.max(data, function(d) {
                             return d.value;
                         })])
                         .range(colors);
-                    //if(tsvFile == "data.tsv"){
                     var timeLabels = svg.selectAll(".timeLabel")
                         .data(times)
                         .enter().append("text")
@@ -123,9 +127,7 @@
                         .attr("y", 0)
                         .style("text-anchor", "middle")
                         .attr("transform", "translate(" + gridSize / 2 + ", -6)")
-                        .attr("class", function(d, i) {
-                            return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis");
-                        });
+                        .attr("class", "timeLabel mono axis");
                     var cards = svg.selectAll(".hour")
                         .data(data, function(d) {
                             return d.day + ':' + d.hour;
