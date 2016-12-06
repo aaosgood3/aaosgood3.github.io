@@ -38,54 +38,42 @@ function createMap() {
 	var g = svg.append("g");
 
 	d3.json("world-110m2.json", function(error, topology) {
-		d3.csv("data.csv", function(data) {
-			var displaySites = function(data) {
-				var sites = svg.selectAll(".site")
-				.data(data, function(d) {
-					return d.University;
-				});
+		function addCircles() {
+			d3.csv("data.csv", function(data) {
+				var displaySites = function(data) {
+					var sites = svg.selectAll(".site")
+					.data(data, function(d) {
+						return d.University;
+					});
 
-				sites.enter().append("circle")
-				.attr("class", "site")
-				.attr("cx", function(d) {
-					return projection([d.Lng, d.Lat])[0];
-				})
-				.attr("cy", function(d) {
-					return projection([d.Lng, d.Lat])[1];
-				})
-				.attr("r", 1)
-				.transition().duration(400)
-				.attr("r", 5);
+					sites.enter().append("circle")
+					.attr("class", "site")
+					.attr("cx", function(d) {
+						return projection([d.Lng, d.Lat])[0];
+					})
+					.attr("cy", function(d) {
+						return projection([d.Lng, d.Lat])[1];
+					})
+					.attr("r", 1)
+					.transition().duration(400)
+					.attr("r", 5);
 
-				d3.selectAll("circle")
-				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide)
-				.call(zoomedCircle);
+					d3.selectAll("circle")
+					.on('mouseover', tip.show)
+					.on('mouseout', tip.hide);
 
-				var zoomedCircle = d3.behavior.zoom()
-				.x(x).y(y).scaleExtent([1, 10])
-				.on("zoom", zoomCircle);
+					sites.exit()
+					.transition().duration(200)
+					.attr("r",1)
+					.remove();
+				};
 
-				function zoomCircle() {
-					circle.attr("transform", transform);
-				}
+				var minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
+				var maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
+				var secondsInDay = 60 * 60 * 24;
 
-				function transform(d) {
- 					return "translate(" + x(d[0]) + "," + y(d[1]) + ")";
-				}
-
-				sites.exit()
-				.transition().duration(200)
-				.attr("r",1)
-				.remove();
-			};
-
-			var minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
-			var maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
-			var secondsInDay = 60 * 60 * 24;
-
-			var updateData = d3.slider()
-			.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
+				var updateData = d3.slider()
+				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
 			// .axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
 			.on("slide", function(evt, value) {
 				var newData = data.filter( function(d) {
@@ -97,18 +85,22 @@ function createMap() {
 
 			d3.select('#slider').call(updateData);
 		});
+	}
 
-g.selectAll("path")
-.data(topojson.object(topology, topology.objects.countries)
-	.geometries)
-.enter()
-.append("path")
-.attr("d", path)
-});
+	g.selectAll("path")
+	.data(topojson.object(topology, topology.objects.countries)
+		.geometries)
+	.enter()
+	.append("path")
+	.attr("d", path)
+	});
 
-function zoomed() {
-  g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-}
+	function zoomed() {
+	  g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+
+	  d3.selectAll("circle").remove();
+	  addCircles();
+	}
 
 }
 
