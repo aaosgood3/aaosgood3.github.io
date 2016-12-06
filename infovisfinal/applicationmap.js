@@ -1,9 +1,9 @@
-var width = width * 0.75;
-var height = height * 0.45;
-
 createMap();
 
 function createMap() {
+
+	var width = width * 0.75;
+	var height = height * 0.45;
 
 	var projection = d3.geo.mercator()
 	.center([0, 10])
@@ -56,7 +56,6 @@ function createMap() {
 				.attr("r", 5);
 
 				d3.selectAll("circle")
-				.call(zoom)
 				.on('mouseover', tip.show)
 				.on('mouseout', tip.hide);
 
