@@ -8,8 +8,8 @@ function createMap() {
 	.rotate([-180, 0]);
 
 	var zoom = d3.behavior.zoom()
-	  .scaleExtent([1, 2])
-	  .on("zoom", zoomed);
+	.scaleExtent([1, 2])
+	.on("zoom", zoomed);
 
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
@@ -84,25 +84,17 @@ function createMap() {
 		});
 
 
-	g.selectAll("path")
-	.data(topojson.object(topology, topology.objects.countries)
-		.geometries)
-	.enter()
-	.append("path")
-	.attr("d", path)
-	});
+g.selectAll("path")
+.data(topojson.object(topology, topology.objects.countries)
+	.geometries)
+.enter()
+.append("path")
+.attr("d", path)
+});
 
-	var zoom = d3.behavior.zoom()
-	.on("zoom",function() {
-		g.attr("transform","translate("+ 
-			d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-		g.selectAll("circle")
-		.attr("d", path.projection(projection));
-		g.selectAll("path")  
-		.attr("d", path.projection(projection)); 
-	});
-
-	svg.call(zoom);
+function zoomed() {
+	map.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
+}
 }
 
 // Resize with window size change
