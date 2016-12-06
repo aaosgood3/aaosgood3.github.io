@@ -5,9 +5,14 @@ var projection = d3.geo.mercator()
 .center([0, 5])
 .rotate([-180, 0]);
 
+var zoom = d3.behavior.zoom()
+  .scaleExtent([1, 2])
+  .on("zoom", zoomed);
+
 var svg = d3.select("#graph").append("svg")
 .attr("width", width)
-.attr("height", height);
+.attr("height", height)
+.call(zoom);
 
 var slider = d3.select("#graph").append("div")
 .attr("id", "slider")
