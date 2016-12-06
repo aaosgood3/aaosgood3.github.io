@@ -3,7 +3,7 @@ createMap();
 function createMap() {
 
 	var projection = d3.geo.mercator()
-	.center([0, 10])
+	.center([0, 2])
 	.rotate([-180, 0]);
 
 	var zoom = d3.behavior.zoom()
