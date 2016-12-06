@@ -2,9 +2,6 @@ createMap();
 
 function createMap() {
 
-	var width = width * 0.75;
-	var height = height * 0.45;
-
 	var projection = d3.geo.mercator()
 	.center([0, 10])
 	.rotate([-180, 0]);
@@ -13,13 +10,17 @@ function createMap() {
 	// .scaleExtent([1, 2])
 	// .on("zoom", zoomed);
 
-	var svg = d3.select("#graph").append("svg")
-	.attr("width", width)
-	.attr("height", height);
+	var svg = d3.select("#graph")
+	.append("div")
+	.classed("svg-container", true)
+	.append("svg")
+	.attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", "0 0 600 400")
+    .classed("svg-content-responsive", true);
 
 	var slider = d3.select("#graph").append("div")
 	.attr("id", "slider")
-	.attr("width", width)
+	.attr("width", svg.node().getBBox().width)
 
 	var tip = d3.tip()
 	.attr('class', 'd3-tip')
@@ -93,8 +94,8 @@ g.selectAll("path")
 
 }
 
-// Resize with window size change
-$(window).resize(function(){
-	document.getElementById("graph").innerHTML = "";
-	createMap();
-});
+// // Resize with window size change
+// $(window).resize(function(){
+// 	document.getElementById("graph").innerHTML = "";
+// 	createMap();
+// });
