@@ -1,8 +1,11 @@
-#README - The README file must give an overview of what you are handing in: which parts are your code, which parts are libraries, and so on. The README must contain URLs to your project websites. The README must also explain any non-obvious features of your interface
+#README - 
+
+The README file must give an overview of what you are handing in: which parts are your code, which parts are libraries, and so on. The README must contain URLs to your project websites. The README must also explain any non-obvious features of your interface
 
 Heatmap - 
 JQuery was used to help add more responsiveness to the visualization such as helping to resize the view when the window size is changed.
 The view can be seen at http://stephaniemertz.com/IV/heatmap.html or aaosgood3.github.io/heatmap/heatmap.html
+Styling (legend, transition between datasets, etc) was heavily borrowed from Tom May's example. 
 
 Features:
 Tooltip - the styled tooltip shows precisely how many applications there are on average for each time to give a more granular view of 
