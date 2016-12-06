@@ -1,22 +1,21 @@
-var width = width * 0.8;
-var height = height * 0.8;
+var width = width * 0.75;
+var height = height * 0.45;
 
 createMap();
 
 function createMap() {
 
 	var projection = d3.geo.mercator()
-	.center([0, 5])
+	.center([0, 10])
 	.rotate([-180, 0]);
 
-	var zoom = d3.behavior.zoom()
-	.scaleExtent([1, 2])
-	.on("zoom", zoomed);
+	// var zoom = d3.behavior.zoom()
+	// .scaleExtent([1, 2])
+	// .on("zoom", zoomed);
 
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
-	.attr("height", height)
-	.call(zoom);
+	.attr("height", height);
 
 	var slider = d3.select("#graph").append("div")
 	.attr("id", "slider")
@@ -85,7 +84,6 @@ function createMap() {
 			d3.select('#slider').call(updateData);
 		});
 
-
 g.selectAll("path")
 .data(topojson.object(topology, topology.objects.countries)
 	.geometries)
@@ -94,9 +92,6 @@ g.selectAll("path")
 .attr("d", path)
 });
 
-function zoomed() {
-	map.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
-}
 }
 
 // Resize with window size change
