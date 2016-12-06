@@ -60,6 +60,10 @@ function createMap() {
 				d3.selectAll("circle")
 				.on('mouseover', tip.show)
 				.on('mouseout', tip.hide)
+				.call(zoomedCircle);
+
+				var zoomedCircle = d3.behavior.zoom()
+				.x(x).y(y).scaleExtent([1, 10])
 				.on("zoom", zoomCircle);
 
 				function zoomCircle() {
