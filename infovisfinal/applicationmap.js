@@ -37,8 +37,8 @@ function createMap() {
 
 	var g = svg.append("g");
 
-	d3.json("world-110m2.json", function(error, topology) {
-		function addCircles() {
+	function addCircles() {
+		d3.json("world-110m2.json", function(error, topology) {
 			d3.csv("data.csv", function(data) {
 				var displaySites = function(data) {
 					var sites = svg.selectAll(".site")
@@ -74,26 +74,26 @@ function createMap() {
 
 				var updateData = d3.slider()
 				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
-			// .axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
-			.on("slide", function(evt, value) {
-				var newData = data.filter( function(d) {
-					var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
-					return time < value;
+				// .axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
+				.on("slide", function(evt, value) {
+					var newData = data.filter( function(d) {
+						var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
+						return time < value;
+					});
+					displaySites(newData);
 				});
-				displaySites(newData);
+
+				d3.select('#slider').call(updateData);
 			});
 
-			d3.select('#slider').call(updateData);
-		});
+			g.selectAll("path")
+			.data(topojson.object(topology, topology.objects.countries)
+				.geometries)
+			.enter()
+			.append("path")
+			.attr("d", path)
+			});
 	}
-
-	g.selectAll("path")
-	.data(topojson.object(topology, topology.objects.countries)
-		.geometries)
-	.enter()
-	.append("path")
-	.attr("d", path)
-	});
 
 	function zoomed() {
 	  g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
