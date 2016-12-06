@@ -6,17 +6,18 @@ function createMap() {
 	.center([0, 10])
 	.rotate([-180, 0]);
 
-	// var zoom = d3.behavior.zoom()
-	// .scaleExtent([1, 2])
-	// .on("zoom", zoomed);
+	var zoom = d3.behavior.zoom()
+	.scaleExtent([1, 10])
+	.on("zoom", zoomed);
 
 	var svg = d3.select("#graph")
 	.append("div")
 	.classed("svg-container", true)
 	.append("svg")
 	.attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", "0 0 600 400")
-    .classed("svg-content-responsive", true);
+    .attr("viewBox", "0 0 960 400")
+    .classed("svg-content-responsive", true)
+    .call(zoom);
 
 	var slider = d3.select("#graph").append("div")
 	.attr("id", "slider")
@@ -91,6 +92,10 @@ g.selectAll("path")
 .append("path")
 .attr("d", path)
 });
+
+function zoomed() {
+  g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
 
 }
 
