@@ -37,7 +37,8 @@ function createMap() {
 			var displaySites = function(data) {
 				var sites = svg.selectAll(".site")
 				.data(data)
-				.enter()
+
+				sites.enter()
 				.append("circle")
 				.attr("class", "site")
 				.attr("cx", function(d) {
@@ -55,7 +56,7 @@ function createMap() {
 				.attr("r",1)
 				.remove();
 
-				d3.selectAll("circle")
+				d3.selectAll(".site")
 				.on('mouseover', tip.show)
 				.on('mouseout', tip.hide);
 			};
