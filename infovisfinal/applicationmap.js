@@ -7,7 +7,7 @@ function createMap() {
 	var projection = d3.geo.mercator()
 	.center([0, 5])
 	.scale(200)
-	.rotate([-90, 0]);
+	.rotate([-30, 0]);
 
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
@@ -51,6 +51,7 @@ function createMap() {
 				.attr("r", 5);
 
 				g.selectAll("circle")
+				.exit()
 				.transition().duration(200)
 				.attr("r",1)
 				.remove();
