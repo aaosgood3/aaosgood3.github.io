@@ -5,7 +5,7 @@ function createMap() {
 	height = 500;
 
 	var projection = d3.geo.albersUsa()
-	.scale(1280)
+	.scale(750)
 	.translate([width / 2, height / 2]);
 
 	var svg = d3.select("#graph").append("svg")
@@ -51,7 +51,6 @@ function createMap() {
 				.append("circle")
 				.attr("class", "site")
 				.attr("cx", function(d) {
-					console.log(d);
 					return projection([d.Lng, d.Lat])[0];
 				})
 				.attr("cy", function(d) {
@@ -89,28 +88,7 @@ function createMap() {
 		});
 	});
 
-	
-
-
-	// g.selectAll("path")
-	// .data(topojson.object(topology, topology.objects.countries)
-	// 	.geometries)
-	// .enter()
-	// .append("path")
-	// .attr("d", path)
-	// });
-
-	var zoom = d3.behavior.zoom()
-	.on("zoom",function() {
-		svg.attr("transform","translate("+ 
-			d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-		svg.selectAll("circle")
-		.attr("d", path.projection(projection));
-		svg.selectAll("path")  
-		.attr("d", path.projection(projection)); 
-	});
-
-	svg.call(zoom);
+	d3.csv()
 }
 
 // Resize with window size change
