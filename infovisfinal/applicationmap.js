@@ -35,11 +35,11 @@ function createMap() {
 	d3.json("world-110m2.json", function(error, topology) {
 		d3.csv("data.csv", function(data) {
 			var displaySites = function(data) {
-				var sites = g,selectAll(".site")
+				g.selectAll("circle")
 				.data(data)
-
-				sites.enter().append("circle")
-				.attr("class", ".sites")
+				.enter()
+				.append("circle")
+				.attr("class", "site")
 				.attr("cx", function(d) {
 					return projection([d.Lng, d.Lat])[0];
 				})
@@ -50,12 +50,12 @@ function createMap() {
 				.transition().duration(400)
 				.attr("r", 5);
 
-				sites.exit()
+				g.selectAll(".site").exit()
 				.transition().duration(200)
 				.attr("r",1)
 				.remove();
 
-				d3.selectAll(".sites")
+				d3.selectAll("circle")
 				.on('mouseover', tip.show)
 				.on('mouseout', tip.hide);
 			};
