@@ -31,7 +31,17 @@ function createMap() {
 
 	var g = svg.append("g");
 
-	d3.json("us.json", function(error, topology) {
+	d3.json("us.json", function(error, us) {
+		svg.append("path")
+      	.datum(topojson.feature(us, us.objects.land))
+      	.attr("d", path)
+      	.attr("class", "land-boundary");
+
+      	svg.append("path")
+      	.datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+      	.attr("d", path)
+      	.attr("class", "state-boundary");
+
 		d3.csv("data.csv", function(data) {
 			var displaySites = function(data) {
 				var sites = svg.selectAll(".site")
@@ -78,13 +88,13 @@ function createMap() {
 	});
 
 
-	g.selectAll("path")
-	.data(topojson.object(topology, topology.objects.countries)
-		.geometries)
-	.enter()
-	.append("path")
-	.attr("d", path)
-	});
+	// g.selectAll("path")
+	// .data(topojson.object(topology, topology.objects.countries)
+	// 	.geometries)
+	// .enter()
+	// .append("path")
+	// .attr("d", path)
+	// });
 
 	var zoom = d3.behavior.zoom()
 	.on("zoom",function() {
