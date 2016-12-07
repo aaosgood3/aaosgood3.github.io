@@ -77,7 +77,7 @@ function createMap() {
 			maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
 			var secondsInDay = 60 * 60 * 24;
 
-			d3.select("slider").call(d3.slider()
+			var updateData = d3.slider()
 				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
 				.on("slide", function(evt, value) {
 					var newData = data.filter( function(d) {
@@ -85,7 +85,9 @@ function createMap() {
 					return time < value;
 					});
 					displaySites(newData);
-				}));
+				});
+
+			d3.select('#slider').call(updateData);
 		});
 	});
 }
