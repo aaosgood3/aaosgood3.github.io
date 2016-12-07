@@ -40,7 +40,7 @@
             margin: 0px;
         }
     </style>
-    <script src="../d3.v3.min.js"></script>
+    <script src="http://d3js.org/d3.v3.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 </head>
@@ -56,24 +56,130 @@
         var datasets = ["data.tsv", "data3.tsv", "data4.tsv"]; //spring semester - "data5.tsv",
         var buttonNames = ["All", "Summer", "Fall"];
         var currentData = "data.tsv";
-        var heatmapChart = function(tsvFile) {
-            var margin = {
+        var svg;
+        var margin = {
                     top: 50,
                     right: 0,
                     bottom: 100,
                     left: 30
+                };
+        var width = window.innerWidth - margin.left - margin.right - 100,
+                height = window.innerHeight - margin.top - margin.bottom - 40,
+                gridSize = Math.floor((width - 50) / 24),        
+                 buckets = 9,
+                        colors = ["#FAFAFA", "#E3E3E3", "#CCCCCC", "#B5B5B5", "#969696", "#757575", "#595959", "#2B2B2B"],
+                days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+                times = ["7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p", "1a", "2a", "3a", "4a", "5a", "6a"];
+            months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+        var heatmapChart = function(tsvFile) {
+console.log(tsvFile);
+           d3.tsv(tsvFile,
+                function(d) {
+                    //if(tsvFile == "data.tsv"){
+                    return {
+                        day: +d.day,
+                        hour: +d.hour,
+                        value: +d.value
+                    };
                 },
+                function(error, data) {
+                   var colorScale = d3.scale.quantile()
+                        .domain([0, buckets - 1, d3.max(data, function(d) {
+                            return d.value;
+                        })])
+                        .range(colors);
+                        var cards = svg.selectAll(".hour")
+                        .data(data, function(d) {
+                            return d.day + ':' + d.hour;
+                        });
+                    cards.append("title");
+                    cards.enter().append("rect")
+                        .attr("x", function(d) {
+                            return (d.hour - 1) * gridSize;
+                        })
+                        .attr("y", function(d) {
+                            return (d.day - 1) * gridSize;
+                        })
+                        .attr("rx", 4)
+                        .attr("ry", 4)
+                        .attr("class", "hour bordered item")
+                        .attr("width", gridSize)
+                        .attr("height", gridSize)
+                        .style("fill", colors[0])
+                        .on("mouseover", function(d) {
+                            if (d.value == 1) {
+                                tooltip.html("<p>" + d.value + " App" + "</p>").style("visibility", "visible")
+                                    .style("left", (d3.event.pageX + 25) + "px")
+                                    .style("top", (d3.event.pageY - 28) + "px");
+                                tooltip.transition().duration(200).style("opacity", 1);
+                            } else {
+                                tooltip.html("<p>" + d.value + " Apps" + "</p>").style("visibility", "visible")
+                                    .style("left", (d3.event.pageX + 25) + "px")
+                                    .style("top", (d3.event.pageY - 28) + "px");
+                                tooltip.transition().duration(200).style("opacity", 1);
+                            }
+                        })
+                        .on("mousemove", function(d) {
+                            if (d.value == 1) {
+                                tooltip.html("<p>" + d.value + " App" + "</p>").style("visibility", "visible")
+                                    .style("left", (d3.event.pageX + 25) + "px")
+                                    .style("top", (d3.event.pageY - 28) + "px");
+                                tooltip.transition().duration(500).style("opacity", 1);
+                            } else {
+                                tooltip.html("<p>" + d.value + " Apps" + "</p>").style("visibility", "visible")
+                                    .style("left", (d3.event.pageX + 25) + "px")
+                                    .style("top", (d3.event.pageY - 28) + "px");
+                                tooltip.transition().duration(200).style("opacity", 1);
+                            }
+                        })
+                        .on("mouseout", function(d, i) {
+                            tooltip.transition().duration(500).style("opacity", 0);
+                        });
+                    cards.transition().duration(1000)
+                        .style("fill", function(d) {
+                            return colorScale(d.value);
+                        });
+                    cards.select("title").text(function(d) {
+                        return d.value;
+                    });
+                    cards.exit().remove();
+                    var legend = svg.selectAll(".legend")
+                        .data([0].concat(colorScale.quantiles()), function(d) {
+                            return d;
+                        });
+                    legend.enter().append("g")
+                        .attr("class", "legend");
+                    legend.append("rect")
+                        .attr("x", function(d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", height)
+                        .attr("width", legendElementWidth)
+                        .attr("height", gridSize / 2)
+                        .style("fill", function(d, i) {
+                            return colors[i];
+                        });
+                    legend.append("text")
+                        .attr("class", "mono")
+                        .text(function(d) {
+                            return "≥ " + Math.round(d);
+                        })
+                        .attr("x", function(d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", height + gridSize);
+                    legend.exit().remove();
+
+                  });
+
+        }
+        var newHeatmapChart = function(tsvFile) {
                 width = window.innerWidth - margin.left - margin.right - 100,
                 height = window.innerHeight - margin.top - margin.bottom - 40,
                 gridSize = Math.floor((width - 50) / 24),
                 buckets = 9,
-                //colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
-                colors = ["#FAFAFA", "#E3E3E3", "#CCCCCC", "#B5B5B5", "#969696", "#757575", "#595959", "#2B2B2B"],
-                days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-                times = ["7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p", "1a", "2a", "3a", "4a", "5a", "6a"];
-            months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
                 legendElementWidth = (width - 50) / colors.length;
-            var svg = d3.select("#chart").append("svg")
+            svg = d3.select("#chart").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
@@ -211,7 +317,7 @@
                     legend.exit().remove();
                 });
         };
-        heatmapChart(datasets[0]);
+        newHeatmapChart(datasets[0]);
         var datasetpicker = d3.select("#dataset-picker").selectAll(".dataset-button")
             .data(datasets);
         datasetpicker.enter()
@@ -225,14 +331,14 @@
             .attr("class", "dataset-button")
             .on("click", function(d) {
                 console.log(d);
-                document.getElementById("chart").innerHTML = "";
+                //document.getElementById("chart").innerHTML = "";
                 currentData = d;
                 heatmapChart(d);
             });
         $(window).resize(function(d) {
             document.getElementById("chart").innerHTML = "";
             //console.log(currentData);
-            heatmapChart(currentData);
+            newHeatmapChart(currentData);
         });
     </script>
 </body>
