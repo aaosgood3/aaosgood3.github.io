@@ -86,7 +86,7 @@ function createMap() {
 
 			d3.select('#slider').call(updateData);
 		});
-	}
+	});
 
 
 	// g.selectAll("path")
