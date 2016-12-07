@@ -4,10 +4,9 @@ function createMap() {
 	var width = 960,
 	height = 500;
 
-	var projection = d3.geo.mercator()
-	.center([0, 5])
-	.scale(200)
-	.rotate([-30, 0]);
+	var projection = d3.geo.albersUsa()
+    .scale(1280)
+    .translate([width / 2, height / 2]);
 
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
@@ -32,7 +31,7 @@ function createMap() {
 
 	var g = svg.append("g");
 
-	d3.json("world-110m2.json", function(error, topology) {
+	d3.json("us.json", function(error, topology) {
 		d3.csv("data.csv", function(data) {
 			var displaySites = function(data) {
 				var sites = svg.selectAll(".site")
