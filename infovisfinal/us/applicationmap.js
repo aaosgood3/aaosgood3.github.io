@@ -83,11 +83,12 @@ function createMap() {
 					var newData = data.filter( function(d) {
 					var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
 					return time < value;
-				});
+					});
 					displaySites(newData);
 				});
 				);
 		});
+	}
 }
 
 // Resize with window size change
