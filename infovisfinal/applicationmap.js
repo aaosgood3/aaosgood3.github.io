@@ -59,9 +59,9 @@ function createMap() {
 				.attr("cy", function(d) {
 					return projection([d.Lng, d.Lat])[1];
 				})
-				.attr("r", 1)
+				.attr("r", 2)
 				.transition().duration(400)
-				.attr("r", 5);
+				.attr("r", 8);
 
 				sites.exit()
 				.transition().duration(200)
