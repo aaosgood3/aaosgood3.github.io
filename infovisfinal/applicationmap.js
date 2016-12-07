@@ -7,7 +7,7 @@ function createMap() {
 	var projection = d3.geo.mercator()
 	.center([0, 5])
 	.scale(200)
-	.rotate([-30, 0]);
+	.rotate([-50, 0]);
 
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
@@ -35,10 +35,12 @@ function createMap() {
 	d3.json("world-110m2.json", function(error, topology) {
 		d3.csv("data.csv", function(data) {
 			var displaySites = function(data) {
-				g.selectAll("circle")
-				.data(data)
-				.enter()
-				.append("circle")
+				var sites = svg.selectAll(".site")
+				.data(data, function(d) {
+					return d.University;
+				});
+
+				sites.enter().append("circle")
 				.attr("class", "site")
 				.attr("cx", function(d) {
 					return projection([d.Lng, d.Lat])[0];
@@ -50,15 +52,14 @@ function createMap() {
 				.transition().duration(400)
 				.attr("r", 5);
 
-				g.selectAll("circle")
-				.exit()
-				.transition().duration(200)
-				.attr("r",1)
-				.remove();
-
 				d3.selectAll("circle")
 				.on('mouseover', tip.show)
 				.on('mouseout', tip.hide);
+
+				sites.exit()
+				.transition().duration(200)
+				.attr("r",1)
+				.remove();
 			};
 
 			var minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
@@ -67,13 +68,14 @@ function createMap() {
 
 			var updateData = d3.slider()
 			.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
-			.on("slide", function(evt, value) {
-				var newData = data.filter( function(d) {
-					var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
-					return time < value;
-				});
-				displaySites(newData);
+		// .axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
+		.on("slide", function(evt, value) {
+			var newData = data.filter( function(d) {
+				var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
+				return time < value;
 			});
+			displaySites(newData);
+		});
 
 		d3.select('#slider').call(updateData);
 	});
