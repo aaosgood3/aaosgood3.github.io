@@ -6,7 +6,7 @@ function createMap() {
 
 	var projection = d3.geo.mercator()
 	.center([0, 2])
-	.rotate([-90, 0]);
+	.rotate([0, 0]);
 
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
