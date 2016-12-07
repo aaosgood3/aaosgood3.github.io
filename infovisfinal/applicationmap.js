@@ -7,7 +7,7 @@ function createMap() {
 	var projection = d3.geo.mercator()
 	.center([0, 5])
 	.scale(200)
-	.rotate([-50, 0]);
+	.rotate([-90, 0]);
 
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
@@ -73,7 +73,7 @@ function createMap() {
 				});
 				displaySites(newData);
 			});
-			
+
 		d3.select('#slider').call(updateData);
 	});
 
