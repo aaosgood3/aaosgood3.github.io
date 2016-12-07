@@ -2,10 +2,11 @@ createMap();
 
 function createMap() {
 	var width = 960,
-	height = 400;
+	height = 500;
 
 	var projection = d3.geo.mercator()
-	.center([0, 2])
+	.center([0, 5])
+	.scale(200)
 	.rotate([-50, 0]);
 
 	var svg = d3.select("#graph").append("svg")
@@ -26,19 +27,18 @@ function createMap() {
 
 	svg.call(tip);
 
-	var path = d3.geo.path().projection(projection);
+	var path = d3.geo.path()
+	.projection(projection);
 
 	var g = svg.append("g");
 
 	d3.json("world-110m2.json", function(error, topology) {
 		d3.csv("data.csv", function(data) {
 			var displaySites = function(data) {
-				var sites = svg.selectAll(".site")
-				.data(data, function(d) {
-					return d.University;
-				});
-
-				sites.enter().append("circle")
+				g.selectAll("circle")
+				.data(data)
+				.enter()
+				.append("circle")
 				.attr("class", "site")
 				.attr("cx", function(d) {
 					return projection([d.Lng, d.Lat])[0];
@@ -50,14 +50,14 @@ function createMap() {
 				.transition().duration(400)
 				.attr("r", 5);
 
-				d3.selectAll("circle")
-				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide);
-
-				sites.exit()
+				g.selectAll("circle")
 				.transition().duration(200)
 				.attr("r",1)
 				.remove();
+
+				d3.selectAll("circle")
+				.on('mouseover', tip.show)
+				.on('mouseout', tip.hide);
 			};
 
 			var minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
@@ -66,15 +66,14 @@ function createMap() {
 
 			var updateData = d3.slider()
 			.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
-		// .axis(true).min(minDateUnix).max(maxDateUnix).step(secondsInDay)
-		.on("slide", function(evt, value) {
-			var newData = data.filter( function(d) {
-				var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
-				return time < value;
+			.on("slide", function(evt, value) {
+				var newData = data.filter( function(d) {
+					var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
+					return time < value;
+				});
+				displaySites(newData);
 			});
-			displaySites(newData);
-		});
-
+			
 		d3.select('#slider').call(updateData);
 	});
 
