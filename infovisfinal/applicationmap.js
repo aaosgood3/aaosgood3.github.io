@@ -35,7 +35,7 @@ function createMap() {
 	d3.json("world-110m2.json", function(error, topology) {
 		d3.csv("data.csv", function(data) {
 			var displaySites = function(data) {
-				g.selectAll("circle")
+				var sites = svg.selectAll(".site")
 				.data(data)
 				.enter()
 				.append("circle")
@@ -50,7 +50,7 @@ function createMap() {
 				.transition().duration(400)
 				.attr("r", 5);
 
-				g.selectAll(".site").exit()
+				sites.exit()
 				.transition().duration(200)
 				.attr("r",1)
 				.remove();
