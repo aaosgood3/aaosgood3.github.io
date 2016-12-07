@@ -51,6 +51,7 @@ function createMap() {
 				.append("circle")
 				.attr("class", "site")
 				.attr("cx", function(d) {
+					console.log(d);
 					return projection([d.Lng, d.Lat])[0];
 				})
 				.attr("cy", function(d) {
@@ -87,6 +88,8 @@ function createMap() {
 			d3.select('#slider').call(updateData);
 		});
 	});
+
+	
 
 
 	// g.selectAll("path")
