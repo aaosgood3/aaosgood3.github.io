@@ -85,8 +85,7 @@ function createMap() {
 					return time < value;
 					});
 					displaySites(newData);
-				});
-				);
+				}));
 		});
 	}
 }
