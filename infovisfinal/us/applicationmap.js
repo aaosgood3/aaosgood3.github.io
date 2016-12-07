@@ -87,7 +87,7 @@ function createMap() {
 					displaySites(newData);
 				}));
 		});
-	}
+	});
 }
 
 // Resize with window size change
