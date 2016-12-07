@@ -1,6 +1,9 @@
 createMap();
 
 function createMap() {
+	var minDate;
+	var maxDate;
+
 	var width = 960,
 	height = 500;
 
@@ -70,25 +73,21 @@ function createMap() {
 				.on('mouseout', tip.hide);
 			};
 
-			var minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
-			var maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
+			minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
+			maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
 			var secondsInDay = 60 * 60 * 24;
 
-			var updateData = d3.slider()
-			.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
-			.on("slide", function(evt, value) {
-				var newData = data.filter( function(d) {
+			d3.select("slider").call(d3.slider()
+				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
+				.on("slide", function(evt, value) {
+					var newData = data.filter( function(d) {
 					var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
 					return time < value;
 				});
-				displaySites(newData);
-			});
-
-			d3.select('#slider').call(updateData);
+					displaySites(newData);
+				});
+				);
 		});
-	});
-
-	d3.csv()
 }
 
 // Resize with window size change
