@@ -5,8 +5,8 @@ function createMap() {
 	height = 500;
 
 	var projection = d3.geo.albersUsa()
-    .scale(1280)
-    .translate([width / 2, height / 2]);
+	.scale(1280)
+	.translate([width / 2, height / 2]);
 
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
@@ -33,14 +33,14 @@ function createMap() {
 
 	d3.json("us.json", function(error, us) {
 		svg.append("path")
-      	.datum(topojson.feature(us, us.objects.land))
-      	.attr("d", path)
-      	.attr("class", "land-boundary");
+		.datum(topojson.feature(us, us.objects.land))
+		.attr("d", path)
+		.attr("class", "land-boundary");
 
-      	svg.append("path")
-      	.datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-      	.attr("d", path)
-      	.attr("class", "state-boundary");
+		svg.append("path")
+		.datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+		.attr("d", path)
+		.attr("class", "state-boundary");
 
 		d3.csv("data.csv", function(data) {
 			var displaySites = function(data) {
@@ -84,8 +84,9 @@ function createMap() {
 				displaySites(newData);
 			});
 
-		d3.select('#slider').call(updateData);
-	});
+			d3.select('#slider').call(updateData);
+		});
+	}
 
 
 	// g.selectAll("path")
