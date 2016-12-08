@@ -100,17 +100,19 @@ function createMap() {
 				return moment(d.Date, "MM/DD/YYYY").unix();
 			});
 
+			console.log(ticks);
 			var tickLabels = data.map(function(d) {
 				return d.Subject;
 			});
 
+			console.log(tickLabels);
 			$("campaigns").slider({
 				min: minDate.unix(),
 				max: maxDate.unix(),
 				ticks: ticks,
 				ticks_labels: tickLabels
 			});
-
+			console.log("creating campaign slider");
 		})
 	}
 }
