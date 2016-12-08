@@ -93,12 +93,12 @@ function createMap() {
 
 	d3.csv("campaigns.csv", function(data) {
 		console.log(data);
-		var ticks = data.forEach(function(d) {
+		var ticks = data.map(function(d) {
 			return moment(d.Date, "MM/DD/YYYY");
 		});
 
 		console.log(ticks);
-		var tickLabels = data.forEach(function(d) {
+		var tickLabels = data.map(function(d) {
 			return d.Subject;
 		});
 
