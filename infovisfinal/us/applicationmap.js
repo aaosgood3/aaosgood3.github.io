@@ -15,12 +15,13 @@ function createMap() {
 	.attr("width", width)
 	.attr("height", height);
 
-	var sliderBootstrap = d3.select("#graph").append("input")
-	.attr("id", "campaigns")
-	.attr("type", "text");
-
-	createCampaignSlider();
-	console.log("Made it here");
+	var campaignTip = d3.tip()
+	.attr('class', 'd3-tip')
+	.offset([10, 0])
+	.html(function(d) {
+		return "<strong>Campaign:</strong>" + d.Subject + "<br/>"
+		+ "<strong>Date:</strong>" + d.Date;
+	});
 
 	var tip = d3.tip()
 	.attr('class', 'd3-tip')
@@ -83,6 +84,8 @@ function createMap() {
 
 			d3.select('#slider').call(d3.slider()
 				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
+				.on('mouseover', campaignTip.show)
+				.on('mouseout', campaignTip.hide)
 				.on("slide", function(evt, value) {
 					var newData = data.filter( function(d) {
 						var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
@@ -90,29 +93,22 @@ function createMap() {
 					});
 					displaySites(newData);
 				}));
-		});
-});
-
-function createCampaignSlider() {
-	console.log("creating campaign slider");
-	d3.csv("campaigns.csv", function(data) {
-		var ticks = data.map(function(d) {
-			return moment(d.Date, "MM/DD/YY").unix();
-		});
-
-		var tickLabels = data.map(function(d) {
-			return d.Subject;
-		});
-
-			//ticks_labels: tickLabels
-			console.log(tickLabels);
-			$("#campaigns").slider({
-				min: 0,
-				max: 10,
-				step: 5,
-				value: 5
 			});
-			console.log("creating campaign slider");
+	});
+
+	function createCampaignSlider() {
+		console.log("creating campaign slider");
+		d3.csv("campaigns.csv", function(data) {
+			var dates = data.map(function(d) {
+				return moment(d.Date, "MM/DD/YY").unix();
+			});
+
+			var campaign = data.map(function(d) {
+				return d.Subject;
+			});
+
+
+
 		})
-}
+	}
 }
