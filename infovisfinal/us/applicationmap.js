@@ -113,7 +113,7 @@ function createMap() {
 				return moment(d.Date, "MM/DD/YY").unix();
 			});
 
-			campaign = data.map(function(d) {
+			campaigns = data.map(function(d) {
 				return d.Subject;
 			});
 		})
