@@ -19,8 +19,8 @@ function createMap() {
 	.attr("width", width)
 	.attr("height", height);
 
-	var slider = d3.select("#graph").append("div")
-	.attr("id", "slider");
+	// var slider = d3.select("#graph").append("div")
+	// .attr("id", "slider");
 
 	// var sliderBootstrap = d3.select("#graph").append("input")
 	// .attr("id", "campaigns")
@@ -49,35 +49,37 @@ function createMap() {
 		.attr("d", path)
 		.attr("class", "state-boundary");
 
+		var displaySites = function(data) {
+			var sites = svg.selectAll(".site")
+			.data(data)
+
+			sites.enter()
+			.append("circle")
+			.attr("class", "site")
+			.attr("cx", function(d) {
+				console.log(d);
+				return projection([d.Lng, d.Lat])[0];
+			})
+			.attr("cy", function(d) {
+				return projection([d.Lng, d.Lat])[1];
+			})
+			.attr("r", 1)
+			.transition().duration(400)
+			.attr("r", 8);
+
+			sites.exit()
+			.transition().duration(200)
+			.attr("r",1)
+			.remove();
+
+			d3.selectAll(".site")
+			.on('mouseover', tip.show)
+			.on('mouseout', tip.hide);
+		};
+
 		d3.csv("data.csv", function(data) {
-			var displaySites = function(data) {
-				var sites = svg.selectAll(".site")
-				.data(data)
-
-				sites.enter()
-				.append("circle")
-				.attr("class", "site")
-				.attr("cx", function(d) {
-					console.log(d);
-					return projection([d.Lng, d.Lat])[0];
-				})
-				.attr("cy", function(d) {
-					return projection([d.Lng, d.Lat])[1];
-				})
-				.attr("r", 1)
-				.transition().duration(400)
-				.attr("r", 8);
-
-				sites.exit()
-				.transition().duration(200)
-				.attr("r",1)
-				.remove();
-
-				d3.selectAll(".site")
-				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide);
-			};
-
+			displaySuites(data);
+			
 			minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
 			maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
 
@@ -89,7 +91,7 @@ function createMap() {
 					var newData = data.filter( function(d) {
 						var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
 						return time < value;
-					});
+					})
 					displaySites(newData);
 				}));
 		});

@@ -84,3 +84,8 @@
     margin-left: 0;
     margin-bottom: -.6em;      
 }
+
+#slider {
+  margin: 20px 0 10px 20px;
+  width: 900px;
+}
