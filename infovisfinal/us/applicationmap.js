@@ -75,6 +75,8 @@ function createMap() {
 
 			minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
 			maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
+			createCampaignSlider();
+
 			var secondsInDay = 60 * 60 * 24;
 
 			var updateData = d3.slider()
@@ -96,18 +98,16 @@ function createMap() {
 		d3.csv("campaigns.csv", function(data) {
 			console.log(data);
 			var ticks = data.map(function(d) {
-				return moment(d.Date, "MM/DD/YYYY");
+				return moment(d.Date, "MM/DD/YYYY").unix();
 			});
 
 			var tickLabels = data.map(function(d) {
 				return d.Subject;
 			});
-			console.log(tickLabels);
-
 
 			$("campaigns").slider({
-				min: minDate.unix() * 1000,
-				max: maxDate.unix() * 1000,
+				min: minDate.unix(),
+				max: maxDate.unix(),
 				ticks: ticks,
 				ticks_labels: tickLabels
 			});
