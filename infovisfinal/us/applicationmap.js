@@ -114,8 +114,8 @@ function createMap() {
 			//ticks_labels: tickLabels
 			console.log(tickLabels);
 			$("#campaigns").slider({
-				ticks: ticks,
-				ticks_labels: tickLabels
+				min: 0,
+				max: 10
 			});
 			console.log("creating campaign slider");
 		})
