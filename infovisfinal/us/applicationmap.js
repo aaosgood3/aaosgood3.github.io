@@ -112,9 +112,3 @@ function createCampaignSlider() {
 		})
 }
 }
-
-// Resize with window size change
-$(window).resize(function(){
-	document.getElementById("graph").innerHTML = "";
-	createMap();
-});
