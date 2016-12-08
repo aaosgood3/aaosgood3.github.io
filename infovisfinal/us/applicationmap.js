@@ -20,6 +20,7 @@ function createMap() {
 	.attr("type", "text");
 
 	createCampaignSlider();
+	console.log("Made it here");
 
 	var tip = d3.tip()
 	.attr('class', 'd3-tip')
@@ -108,7 +109,8 @@ function createCampaignSlider() {
 			$("#campaigns").slider({
 				min: 0,
 				max: 10,
-				step: 5
+				step: 5,
+				value: 5
 			});
 			console.log("creating campaign slider");
 		})
