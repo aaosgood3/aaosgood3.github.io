@@ -79,10 +79,6 @@ function createMap() {
 
 			var secondsInDay = 60 * 60 * 24;
 
-			d3.select('#slider')
-			.on('mouseover', campaignTip.show)
-			.on('mouseout', campaignTip.hide)
-
 			d3.select('#slider').call(d3.slider()
 				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
 				.on("slide", function(evt, value) {
@@ -91,7 +87,7 @@ function createMap() {
 						return time < value;
 					});
 					displaySites(newData);
-					updateLatestCampaign();
+					updateLatestCampaign(time);
 				}));
 			});
 	});
@@ -106,7 +102,7 @@ function createMap() {
 				min = Math.abs(dates[i] - time);
 			}
 		}
-		
+
 		d3.select("#latest").html("Latest Campaign: " + campaigns[i] + '\n'
 			+ "Finished: " + dates[i]);
 	}
