@@ -84,6 +84,7 @@ function createMap() {
 						var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
 						return time < value;
 					});
+					createCampaignSlider();
 					displaySites(newData);
 				});
 
@@ -91,26 +92,28 @@ function createMap() {
 		});
 	});
 
-	d3.csv("campaigns.csv", function(data) {
-		console.log(data);
-		var ticks = data.map(function(d) {
-			return moment(d.Date, "MM/DD/YYYY");
-		});
+	function createCampaignSlider() {
+		d3.csv("campaigns.csv", function(data) {
+			console.log(data);
+			var ticks = data.map(function(d) {
+				return moment(d.Date, "MM/DD/YYYY");
+			});
 
-		console.log(ticks);
-		var tickLabels = data.map(function(d) {
-			return d.Subject;
-		});
+			var tickLabels = data.map(function(d) {
+				return d.Subject;
+			});
+			console.log(tickLabels);
 
 
-		$("campaigns").slider({
-			min: minDate.unix() * 1000,
-			max: maxDate.unix() * 1000,
-			ticks: ticks,
-			ticks_labels: tickLabels
-		});
+			$("campaigns").slider({
+				min: minDate.unix() * 1000,
+				max: maxDate.unix() * 1000,
+				ticks: ticks,
+				ticks_labels: tickLabels
+			});
 
-	})
+		})
+	}
 }
 
 // Resize with window size change
