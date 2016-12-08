@@ -12,6 +12,9 @@ function createMap() {
 	.scale(750)
 	.translate([width / 2, height / 2]);
 
+	var path = d3.geo.path()
+	.projection(projection);
+
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
 	.attr("height", height);
@@ -19,9 +22,9 @@ function createMap() {
 	var slider = d3.select("#graph").append("div")
 	.attr("id", "slider");
 
-	var sliderBootstrap = d3.select("#graph").append("input")
-	.attr("id", "campaigns")
-	.attr("type", "text");
+	// var sliderBootstrap = d3.select("#graph").append("input")
+	// .attr("id", "campaigns")
+	// .attr("type", "text");
 
 	var tip = d3.tip()
 	.attr('class', 'd3-tip')
@@ -32,9 +35,6 @@ function createMap() {
 	});
 
 	svg.call(tip);
-
-	var path = d3.geo.path()
-	.projection(projection);
 
 	var g = svg.append("g");
 
@@ -64,7 +64,7 @@ function createMap() {
 				.attr("cy", function(d) {
 					return projection([d.Lng, d.Lat])[1];
 				})
-				.attr("r", 2)
+				.attr("r", 1)
 				.transition().duration(400)
 				.attr("r", 8);
 
@@ -122,6 +122,7 @@ function createCampaignSlider() {
 $(window).resize(function(){
 	document.getElementById("graph").innerHTML = "";
 	if (!Lock) {
+		Lock = true;
 		createMap();
 		Lock = false;
 	}
