@@ -1,6 +1,11 @@
 createMap();
 
 function createMap() {
+	var dates;
+	var campaigns;
+
+	parseCampaigns();
+
 	var minDate;
 	var maxDate;
 
@@ -14,14 +19,6 @@ function createMap() {
 	var svg = d3.select("#graph").append("svg")
 	.attr("width", width)
 	.attr("height", height);
-
-	var campaignTip = d3.tip()
-	.attr('class', 'd3-tip')
-	.offset([10, 0])
-	.html(function(d) {
-		return "<strong>Campaign:</strong>" + d.Subject + "<br/>"
-		+ "<strong>Date:</strong>" + d.Date;
-	});
 
 	var tip = d3.tip()
 	.attr('class', 'd3-tip')
@@ -51,9 +48,6 @@ function createMap() {
 
 		d3.csv("data.csv", function(data) {
 			var displaySites = function(data) {
-				d3.select('#slider')
-				.data(data);
-
 				var sites = svg.selectAll(".site")
 				.data(data);
 
@@ -97,23 +91,35 @@ function createMap() {
 						return time < value;
 					});
 					displaySites(newData);
+					updateLatestCampaign();
 				}));
 			});
 	});
 
-	function createCampaignSlider() {
-		console.log("creating campaign slider");
+	function updateLatestCampaign(time) {
+		var min = Math.abs(dates[0] - time);
+		var minIndex = 0;
+
+		for (var i = 1; i < dates.length; i++) {
+			if (Math.abs(dates[i] - time) < min) {
+				minIndex = i;
+				min = Math.abs(dates[i] - time);
+			}
+		}
+		
+		d3.select("#latest").html("Latest Campaign: " + campaigns[i] + '\n'
+			+ "Finished: " + dates[i]);
+	}
+
+	function parseCampaigns() {
 		d3.csv("campaigns.csv", function(data) {
-			var dates = data.map(function(d) {
+			dates = data.map(function(d) {
 				return moment(d.Date, "MM/DD/YY").unix();
 			});
 
-			var campaign = data.map(function(d) {
+			campaign = data.map(function(d) {
 				return d.Subject;
 			});
-
-
-
 		})
 	}
 }
