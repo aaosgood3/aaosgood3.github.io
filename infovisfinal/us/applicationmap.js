@@ -101,6 +101,7 @@ function createMap() {
 			console.log("Min: " + minDate.unix());
 			console.log("Max: " + maxDate.unix());
 			var ticks = data.map(function(d) {
+				console.log(d.Date);
 				return moment(d.Date, "MM/DD/YYYY HH:mm:ss").unix();
 			});
 
