@@ -81,8 +81,8 @@ function createMap() {
 				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
 				.on("slide", function(evt, value) {
 					var newData = data.filter( function(d) {
-					var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
-					return time < value;
+						var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
+						return time < value;
 					});
 					displaySites(newData);
 				});
@@ -91,6 +91,25 @@ function createMap() {
 		});
 	});
 }
+
+d3.csv("campaigns.csv", function(data) {
+	var ticks = data.forEach(function(d) {
+		return moment(d.Date, "MM/DD/YYYY");
+	});
+
+	var tickLabels = data.forEach(function(d) {
+		return d.Subject;
+	});
+
+
+	$("campaigns").slider({
+		min: minDate.unix() * 1000,
+		max: maxDate.unix() * 1000,
+		ticks: ticks,
+		ticks_labels: tickLabels
+	});
+
+})
 
 // Resize with window size change
 $(window).resize(function(){
