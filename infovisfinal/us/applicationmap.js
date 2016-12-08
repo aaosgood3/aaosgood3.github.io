@@ -90,25 +90,24 @@ function createMap() {
 						return time < value;
 					});
 					displaySites(newData);
-				});
-			);
+				}));
 		});
-	});
+});
 
-	function createCampaignSlider() {
-		console.log("creating campaign slider");
-		d3.csv("campaigns.csv", function(data) {
-			console.log("Min: " + minDate.unix());
-			console.log("Max: " + maxDate.unix());
-			var ticks = data.map(function(d) {
-				console.log(d.Date);
-				return moment(d.Date, "MM/DD/YY").unix();
-			});
+function createCampaignSlider() {
+	console.log("creating campaign slider");
+	d3.csv("campaigns.csv", function(data) {
+		console.log("Min: " + minDate.unix());
+		console.log("Max: " + maxDate.unix());
+		var ticks = data.map(function(d) {
+			console.log(d.Date);
+			return moment(d.Date, "MM/DD/YY").unix();
+		});
 
-			console.log(ticks);
-			var tickLabels = data.map(function(d) {
-				return d.Subject;
-			});
+		console.log(ticks);
+		var tickLabels = data.map(function(d) {
+			return d.Subject;
+		});
 
 			//ticks_labels: tickLabels
 			console.log(tickLabels);
@@ -119,7 +118,7 @@ function createMap() {
 			});
 			console.log("creating campaign slider");
 		})
-	}
+}
 }
 
 // Resize with window size change
