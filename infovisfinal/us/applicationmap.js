@@ -51,8 +51,11 @@ function createMap() {
 
 		d3.csv("data.csv", function(data) {
 			var displaySites = function(data) {
+				d3.select('#slider')
+				.data(data);
+
 				var sites = svg.selectAll(".site")
-				.data(data)
+				.data(data);
 
 				sites.enter()
 				.append("circle")
