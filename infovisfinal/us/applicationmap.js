@@ -86,7 +86,6 @@ function createMap() {
 						var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
 						return time < value;
 					});
-					createCampaignSlider();
 					displaySites(newData);
 				});
 
@@ -95,8 +94,8 @@ function createMap() {
 	});
 
 	function createCampaignSlider() {
+		console.log("creating campaign slider");
 		d3.csv("campaigns.csv", function(data) {
-			console.log(data);
 			var ticks = data.map(function(d) {
 				return moment(d.Date, "MM/DD/YYYY").unix();
 			});
