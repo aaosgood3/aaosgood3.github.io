@@ -93,6 +93,7 @@ function createMap() {
 	});
 
 	function updateLatestCampaign(time) {
+		console.log(time)l
 		var min = Math.abs(dates[0] - time);
 		var minIndex = 0;
 
@@ -103,8 +104,8 @@ function createMap() {
 			}
 		}
 
-		d3.select("#latest").html("Latest Campaign: " + campaigns[i] + '\n'
-			+ "Finished: " + dates[i]);
+		d3.select("#latest").html("<br><br>Latest Campaign: " + campaigns[i] + 
+			"Finished: " + dates[i]);
 	}
 
 	function parseCampaigns() {
