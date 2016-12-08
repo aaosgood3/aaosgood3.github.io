@@ -106,7 +106,7 @@ function createMap() {
 			});
 
 			console.log(tickLabels);
-			$("campaigns").slider({
+			$("#campaigns").slider({
 				min: minDate.unix(),
 				max: maxDate.unix(),
 				ticks: ticks,
