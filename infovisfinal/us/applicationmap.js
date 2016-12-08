@@ -82,7 +82,7 @@ function createMap() {
 
 			var secondsInDay = 60 * 60 * 24;
 
-			var updateData = d3.slider()
+			d3.select('#slider').call(d3.slider()
 				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
 				.on("slide", function(evt, value) {
 					var newData = data.filter( function(d) {
@@ -91,8 +91,7 @@ function createMap() {
 					});
 					displaySites(newData);
 				});
-
-			d3.select('#slider').call(updateData);
+			);
 		});
 	});
 
