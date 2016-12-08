@@ -87,7 +87,7 @@ function createMap() {
 						return time < value;
 					});
 					displaySites(newData);
-					updateLatestCampaign(time);
+					updateLatestCampaign(value);
 				}));
 			});
 	});
