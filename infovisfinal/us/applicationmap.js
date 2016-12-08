@@ -15,6 +15,9 @@ function createMap() {
 	.attr("width", width)
 	.attr("height", height);
 
+	var slider = d3.select("#graph").append("div")
+	.attr("id", "slider");
+
 	var sliderBootstrap = d3.select("#graph").append("input")
 	.attr("id", "campaigns")
 	.attr("type", "text");
@@ -75,7 +78,6 @@ function createMap() {
 
 			minDate = moment(data[0].Time, "MM/DD/YYYY HH:mm:ss");
 			maxDate = moment(data[data.length-1].Time, "MM/DD/YYYY HH:mm:ss");
-			createCampaignSlider();
 
 			var secondsInDay = 60 * 60 * 24;
 
@@ -94,14 +96,10 @@ function createMap() {
 function createCampaignSlider() {
 	console.log("creating campaign slider");
 	d3.csv("campaigns.csv", function(data) {
-		console.log("Min: " + minDate.unix());
-		console.log("Max: " + maxDate.unix());
 		var ticks = data.map(function(d) {
-			console.log(d.Date);
 			return moment(d.Date, "MM/DD/YY").unix();
 		});
 
-		console.log(ticks);
 		var tickLabels = data.map(function(d) {
 			return d.Subject;
 		});
