@@ -115,7 +115,8 @@ function createMap() {
 			console.log(tickLabels);
 			$("#campaigns").slider({
 				min: 0,
-				max: 10
+				max: 10,
+				step: 5
 			});
 			console.log("creating campaign slider");
 		})
