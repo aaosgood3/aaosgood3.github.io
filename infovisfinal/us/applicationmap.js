@@ -1,5 +1,6 @@
 createMap();
 
+Lock = false;
 function createMap() {
 	var minDate;
 	var maxDate;
@@ -82,8 +83,7 @@ function createMap() {
 
 			var secondsInDay = 60 * 60 * 24;
 
-			var s = d3.slider();
-			d3.select('#slider').call(s
+			d3.select('#slider').call(d3.slider()
 				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
 				.on("slide", function(evt, value) {
 					var newData = data.filter( function(d) {
@@ -121,5 +121,8 @@ function createCampaignSlider() {
 // Resize with window size change
 $(window).resize(function(){
 	document.getElementById("graph").innerHTML = "";
-	createMap();
+	if (!Lock) {
+		createMap();
+		Lock = false;
+	}
 });
