@@ -17,11 +17,9 @@ function createMap() {
 
 	var slider = d3.select("#graph").append("div")
 	.attr("id", "slider")
-	.attr("width", width)
 
 	var sliderBootstrap = d3.select("#graph").append("input")
 	.attr("id", "campaigns")
-	.attr("width", width)
 
 	var tip = d3.tip()
 	.attr('class', 'd3-tip')
