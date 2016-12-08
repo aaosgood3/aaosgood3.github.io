@@ -57,6 +57,7 @@ function createMap() {
 				.append("circle")
 				.attr("class", "site")
 				.attr("cx", function(d) {
+					console.log(d);
 					return projection([d.Lng, d.Lat])[0];
 				})
 				.attr("cy", function(d) {
@@ -81,7 +82,8 @@ function createMap() {
 
 			var secondsInDay = 60 * 60 * 24;
 
-			d3.select('#slider').call(d3.slider()
+			var s = d3.slider();
+			d3.select('#slider').call(s
 				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
 				.on("slide", function(evt, value) {
 					var newData = data.filter( function(d) {
