@@ -93,7 +93,6 @@ function createMap() {
 	});
 
 	function updateLatestCampaign(time) {
-		console.log(time)l
 		var min = Math.abs(dates[0] - time);
 		var minIndex = 0;
 
