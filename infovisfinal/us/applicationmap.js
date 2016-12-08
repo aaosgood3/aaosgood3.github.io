@@ -82,10 +82,12 @@ function createMap() {
 
 			var secondsInDay = 60 * 60 * 24;
 
+			d3.select('#slider')
+			.on('mouseover', campaignTip.show)
+			.on('mouseout', campaignTip.hide)
+
 			d3.select('#slider').call(d3.slider()
 				.scale(d3.time.scale().domain([minDate.toDate(), maxDate.toDate()])).axis(d3.svg.axis())
-				.on('mouseover', campaignTip.show)
-				.on('mouseout', campaignTip.hide)
 				.on("slide", function(evt, value) {
 					var newData = data.filter( function(d) {
 						var time = moment(d.Time, "MM/DD/YYYY HH:mm:ss").unix() * 1000; // convert to ms
