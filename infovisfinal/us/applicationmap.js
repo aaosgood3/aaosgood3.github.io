@@ -19,6 +19,10 @@ function createMap() {
 	.attr("id", "slider")
 	.attr("width", width)
 
+	var sliderBootstrap = d3.select("#graph").append("input")
+	.attr("id", "campaigns")
+	.attr("width", width)
+
 	var tip = d3.tip()
 	.attr('class', 'd3-tip')
 	.offset([-10, 0])
@@ -96,6 +100,8 @@ function createMap() {
 	function createCampaignSlider() {
 		console.log("creating campaign slider");
 		d3.csv("campaigns.csv", function(data) {
+			console.log("Min: " + minDate.unix());
+			console.log("Max: " + maxDate.unix());
 			var ticks = data.map(function(d) {
 				return moment(d.Date, "MM/DD/YYYY").unix();
 			});
