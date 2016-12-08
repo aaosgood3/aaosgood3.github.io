@@ -110,12 +110,12 @@ function createMap() {
 				return d.Subject;
 			});
 
+			//ticks_labels: tickLabels
 			console.log(tickLabels);
 			$("#campaigns").slider({
 				min: minDate.unix(),
 				max: maxDate.unix(),
-				ticks: ticks,
-				ticks_labels: tickLabels
+				ticks: ticks
 			});
 			console.log("creating campaign slider");
 		})
