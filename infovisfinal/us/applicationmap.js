@@ -90,26 +90,26 @@ function createMap() {
 			d3.select('#slider').call(updateData);
 		});
 	});
+
+	d3.csv("campaigns.csv", function(data) {
+		var ticks = data.forEach(function(d) {
+			return moment(d.Date, "MM/DD/YYYY");
+		});
+
+		var tickLabels = data.forEach(function(d) {
+			return d.Subject;
+		});
+
+
+		$("campaigns").slider({
+			min: minDate.unix() * 1000,
+			max: maxDate.unix() * 1000,
+			ticks: ticks,
+			ticks_labels: tickLabels
+		});
+
+	})
 }
-
-d3.csv("campaigns.csv", function(data) {
-	var ticks = data.forEach(function(d) {
-		return moment(d.Date, "MM/DD/YYYY");
-	});
-
-	var tickLabels = data.forEach(function(d) {
-		return d.Subject;
-	});
-
-
-	$("campaigns").slider({
-		min: minDate.unix() * 1000,
-		max: maxDate.unix() * 1000,
-		ticks: ticks,
-		ticks_labels: tickLabels
-	});
-
-})
 
 // Resize with window size change
 $(window).resize(function(){
