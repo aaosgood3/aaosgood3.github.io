@@ -19,6 +19,8 @@ function createMap() {
 	.attr("id", "campaigns")
 	.attr("type", "text");
 
+	createCampaignSlider();
+
 	var tip = d3.tip()
 	.attr('class', 'd3-tip')
 	.offset([-10, 0])
